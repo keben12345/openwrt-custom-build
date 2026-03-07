@@ -1,40 +1,65 @@
 #!/bin/bash
-set -e
 
-IFS=/ read -r target sub_target device <<< "$1"
+cd openwrt
 
-RELEASE_FILE="${device}-release.txt"
+echo "create WR720N v3 dts..."
 
-echo "" > "${RELEASE_FILE}"
+cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n-v3.dts << 'EOF'
+/dts-v1/;
 
-####################
-#*** patch openwrt v24.10.4
-#cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#include "ar9331_tplink_tl-wr720n.dtsi"
 
+/ {
+    compatible = "tplink,tl-wr720n-v3", "qca,ar9331";
+    model = "TP-Link TL-WR720N v3";
+};
 
-####################
-#*** set timezone
-sed -i "s|timezone='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
-sed -i "s|zonename='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
-sed -i "s|timezone='GMT0'|timezone='CST-8'|" openwrt/package/base-files/files/bin/config_generate
-sed -i "s|log_size='128'|log_size='64'|" openwrt/package/base-files/files/bin/config_generate
+&switch0 {
+    ports {
+        port@0 { reg = <0>; label = "wan"; };
+        port@1 { reg = <1>; label = "lan1"; };
+        port@2 { reg = <2>; label = "lan2"; };
+        port@6 { reg = <6>; label = "cpu"; ethernet = <&eth0>; };
+    };
+};
+EOF
 
-echo "- 设置时区为Asia/Shanghai \`zonename=Asia/Shanghai\`" >> "${RELEASE_FILE}"
-echo "- 设置日志大小64 \`log_size='64'\`" >> "${RELEASE_FILE}"
-echo "- 设置 opkg 源为 阿里云 \`https://mirrors.aliyun.com/openwrt\`" >> "${RELEASE_FILE}"
-echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE}"
+echo "add device..."
 
-#*** copy kernel MD5
-sed -i 's#$(LINUX_DIR)/.vermagic#$(LINUX_DIR)/.vermagic\n	cp $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic#' openwrt/include/kernel-defaults.mk
-sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TOPDIR)/.vermagic#' openwrt/package/kernel/linux/Makefile
+cat >> target/linux/ath79/image/tiny-tp-link.mk << 'EOF'
 
+define Device/tplink_tl-wr720n-v3
+  SOC := ar9331
+  DEVICE_VENDOR := TP-Link
+  DEVICE_MODEL := TL-WR720N
+  DEVICE_VARIANT := v3
+  IMAGE_SIZE := 15872k
+endef
+TARGET_DEVICES += tplink_tl-wr720n-v3
 
-####################
-#*** create new device model
-if [ ! -f "targets/${device}.sh" ]; then
-	echo "[targets/${device}.sh] not found!"
-	exit 1
-fi
-. "targets/${device}.sh"
+EOF
 
+echo "clone lean packages..."
 
+git clone https://github.com/coolsnowwolf/lede package/lean
+
+echo "create config..."
+
+cat > .config << 'EOF'
+CONFIG_TARGET_ath79=y
+CONFIG_TARGET_ath79_tiny=y
+CONFIG_TARGET_ath79_tiny_DEVICE_tplink_tl-wr720n-v3=y
+
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
+
+CONFIG_PACKAGE_luci-app-ssr-plus=y
+
+CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
+CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+
+CONFIG_PACKAGE_kmod-usb2=y
+CONFIG_PACKAGE_kmod-usb-ohci=y
+CONFIG_PACKAGE_kmod-usb-printer=y
+CONFIG_PACKAGE_p910nd=y
+EOF
