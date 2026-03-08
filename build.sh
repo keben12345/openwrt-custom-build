@@ -3,6 +3,8 @@ set -e
 
 VERSION=$1
 
+echo "Clone OpenWrt..."
+
 git clone https://github.com/openwrt/openwrt -b $VERSION openwrt
 
 cd openwrt
@@ -16,8 +18,8 @@ bash config.sh
 
 cd openwrt
 
-rm -f .config
-cp ../.config .
-
 make defconfig
+
+echo "Build firmware..."
+
 make -j$(nproc)
