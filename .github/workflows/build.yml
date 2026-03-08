@@ -2,26 +2,39 @@ name: openwrt-build-github-actions
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: ["ath79/tiny/tplink_tl-wr720n-v3-16m"]
+        version: ["22.03.5"]
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-      - name: install dependencies
+      - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential g++ git libncurses5-dev zlib1g-dev \
-            python3-distutils unzip wget rsync bc ccache
+          sudo apt install -y build-essential git subversion unzip python3 python3-distutils libncurses-dev zlib1g-dev gawk gcc-multilib g++-multilib wget ccache
 
-      - name: build
+      - name: Run build script
+        run: bash ./build.sh ${{ matrix.version }} ${{ matrix.target }}
+
+      - name: List output
         run: |
-          bash build.sh v22.03.5 ath79/tiny/tplink_tl-wr720n-v3
+          tree -L 3 openwrt/bin/targets
+          ls -lh openwrt/bin/targets/*/*.bin
 
-      - name: upload artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-wr720n-v3
-          path: openwrt/bin/targets/ath79/tiny/*
+          name: wr720n-firmware
+          path: |
+            openwrt/bin/targets/*/*-sysupgrade.bin
+            openwrt/bin/targets/*/*-factory.bin
+          retention-days: 3
