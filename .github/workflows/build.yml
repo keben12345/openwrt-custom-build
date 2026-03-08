@@ -1,36 +1,40 @@
-name: build-openwrt
+name: openwrt-build-wr720n
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - "v*"
 
 jobs:
-
   build:
-
     runs-on: ubuntu-22.04
-
+    strategy:
+      matrix:
+        version: [v22.03.5]  # 你可以改成 v22.03.5 或 v23.05
+        target: [ath79/tiny/tplink_tl-wr720n-v3]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: checkout
-      uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential gawk git libncurses5-dev libncursesw5-dev \
+            python3 unzip wget zlib1g-dev file ccache rsync bc
 
-    - name: install deps
-      run: |
-        sudo apt update
-        sudo apt install -y \
-        build-essential clang flex bison g++ gawk \
-        gcc-multilib g++-multilib gettext git libncurses-dev \
-        libssl-dev python3 python3-setuptools rsync unzip \
-        zlib1g-dev file wget
+      - name: Build OpenWrt
+        run: |
+          bash build.sh ${{ matrix.version }} ${{ matrix.target }}
 
-    - name: build
-      run: |
-        VERSION=$(cat version.txt)
-        TARGET=$(cat targets.txt)
-        bash build.sh $VERSION $TARGET
+      - name: List output
+        run: |
+          tree -L 2 openwrt/bin/targets
 
-    - name: upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: openwrt-firmware
-        path: openwrt/bin/targets
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: wr720n-firmware-${{ matrix.version }}
+          path: openwrt/bin/targets/*/*.bin
+          retention-days: 3
