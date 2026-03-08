@@ -1,25 +1,23 @@
 #!/bin/bash
 set -e
 
-VERSION=$1  # 例如 v22.03.5
+VERSION=$1
 
-echo "Cloning OpenWrt $VERSION..."
-git clone -b $VERSION https://github.com/openwrt/openwrt openwrt
+git clone https://github.com/openwrt/openwrt -b $VERSION openwrt
 
 cd openwrt
+
 ./scripts/feeds update -a
 ./scripts/feeds install -a
+
 cd ..
 
-echo "Generating DTS and config..."
 bash config.sh
 
 cd openwrt
+
+rm -f .config
+cp ../.config .
+
 make defconfig
-echo "Starting build..."
 make -j$(nproc)
-
-# 并行编译固件
-make -j$(nproc) V=s
-
-echo "=== Build completed: check openwrt/bin/targets for factory and sysupgrade bins ==="
