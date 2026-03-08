@@ -53,10 +53,10 @@ CONFIG_TARGET_ath79_tiny_DEVICE_tplink_tl-wr720n-v3=y
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 
-CONFIG_PACKAGE_luci-app-ssr-plus=y
+# CONFIG_PACKAGE_luci-app-ssr-plus=y
 
-CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
-CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+# CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
+# CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
 
 CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb-ohci=y
