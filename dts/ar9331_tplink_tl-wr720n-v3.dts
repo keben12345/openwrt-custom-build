@@ -1,0 +1,16 @@
+/dts-v1/;
+
+#include "ar9331_tplink_tl-wr710n.dtsi"
+
+/ {
+    model = "TP-Link TL-WR720N v3";
+    compatible = "tplink,tl-wr720n-v3", "qca,ar9331";
+
+    aliases {
+        label-mac-device = &eth0;
+    };
+};
+
+&usb {
+    status = "okay";
+};
