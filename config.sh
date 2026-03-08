@@ -3,7 +3,7 @@ set -e
 
 echo "Create DTS and device config..."
 
-# 将 DTS 放入源码中
+# 复制 DTS
 cp dts/ar9331_tplink_tl-wr720n-v3.dts openwrt/target/linux/ath79/dts/
 
 # 添加 device 定义
@@ -22,13 +22,13 @@ define Device/tplink_tl-wr720n-v3
     p910nd \
     luci \
     luci-i18n-base-zh-cn
-  FIRMWARES := factory sysupgrade
   TPLINK_HWID := 0x07030101
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
 
-# 生成精简 .config
+echo "Generating .config..."
+
 cat > openwrt/.config << 'EOF'
 CONFIG_TARGET_ath79=y
 CONFIG_TARGET_ath79_generic=y
@@ -38,28 +38,6 @@ CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 
 CONFIG_PACKAGE_kmod-usb-core=y
-CONFIG_PACKAGE_kmod-usb-ohci=y
-CONFIG_PACKAGE_kmod-usb-printer=y
-CONFIG_PACKAGE_p910nd=y
-
-# 去掉 SSR/Passwall
-# CONFIG_PACKAGE_luci-app-ssr-plus is not selected
-EOF
-
-echo "Config generation complete."
-echo "Generating .config..."
-
-# 生成 OpenWrt 配置
-cat > openwrt/.config << EOF
-CONFIG_TARGET_ath79=y
-CONFIG_TARGET_ath79_tiny=y
-CONFIG_TARGET_ath79_tiny_DEVICE_$DEVICE_NAME=y
-
-CONFIG_PACKAGE_luci=y
-CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
-
-# USB 支持
-CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb-ohci=y
 CONFIG_PACKAGE_kmod-usb-printer=y
 CONFIG_PACKAGE_p910nd=y
