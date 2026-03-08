@@ -41,9 +41,11 @@ EOF
 
 echo "clone lean packages..."
 
-git clone https://github.com/coolsnowwolf/lede package/lean
+cd openwrt
 
-echo "create config..."
+# git clone https://github.com/fw876/helloworld package/helloworld
+
+# echo "create config..."
 
 cat > .config << 'EOF'
 CONFIG_TARGET_ath79=y
