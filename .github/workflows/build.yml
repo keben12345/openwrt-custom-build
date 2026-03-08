@@ -25,7 +25,6 @@ jobs:
       - name: Start build
         run: |
           chmod +x build.sh config.sh
-          make defconfig
           ./build.sh $OPENWRT_VERSION
 
       - name: Collect artifacts
