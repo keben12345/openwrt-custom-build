@@ -23,4 +23,4 @@ cd openwrt
 
 make defconfig
 
-make -j$(nproc) V=s
+make -j$(nproc)
