@@ -1,35 +1,17 @@
 /dts-v1/;
 
-#include "ar9331_tplink_tl-wr710n.dtsi"
+/include "ar9331_tplink_tl-wr710n-8m.dtsi"
 
-/ {
-    model = "TP-Link TL-WR720N v3";
+ / {
     compatible = "tplink,tl-wr720n-v3", "qca,ar9331";
-
-    aliases {
-        label-mac-device = &eth0;
-    };
-
-    leds {
-        compatible = "gpio-leds";
-
-        system {
-            label = "wr720n:green:system";
-            gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
-        };
-    };
-
-    keys {
-        compatible = "gpio-keys";
-
-        reset {
-            label = "reset";
-            linux,code = <KEY_RESTART>;
-            gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
-        };
-    };
+    model = "TP-Link TL-WR720N v3";
 };
 
-&usb {
-    status = "okay";
+&switch0 {
+    ports {
+        port@0 { reg = <0>; label = "wan"; };
+        port@1 { reg = <1>; label = "lan1"; };
+        port@2 { reg = <2>; label = "lan2"; };
+        port@6 { reg = <6>; label = "cpu"; ethernet = <&eth0>; };
+    };
 };
