@@ -33,7 +33,7 @@ jobs:
           tree -L 2 openwrt/bin/targets
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wr720n-firmware-${{ matrix.version }}
           path: openwrt/bin/targets/*/*.bin
