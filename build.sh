@@ -1,36 +1,23 @@
 #!/bin/bash
 set -e
 
-VERSION=$1
-TARGET=$2
+VERSION=$1  # 例如 v22.03.5
 
-echo "=== Build target start: $TARGET, OpenWrt $VERSION ==="
-
-# 克隆 OpenWrt 源码
-if [ ! -d openwrt ]; then
-    git clone -b $VERSION https://github.com/openwrt/openwrt openwrt
-fi
+echo "Cloning OpenWrt $VERSION..."
+git clone -b $VERSION https://github.com/openwrt/openwrt openwrt
 
 cd openwrt
-
-# 更新 feeds
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-
-# 调用 config.sh 动态生成 DTS、设备定义和 .config
 cd ..
-bash config.sh $TARGET
+
+echo "Generating DTS and config..."
+bash config.sh
 
 cd openwrt
-
-# 确保 FIRMWARES 包含 factory sysupgrade
-MAKEFILE="target/linux/ath79/image/tiny-tp-link.mk"
-if ! grep -q "FIRMWARES := factory sysupgrade" "$MAKEFILE"; then
-    echo "FIRMWARES := factory sysupgrade" >> "$MAKEFILE"
-fi
-
-# 重新生成配置
 make defconfig
+echo "Starting build..."
+make -j$(nproc)
 
 # 并行编译固件
 make -j$(nproc) V=s
