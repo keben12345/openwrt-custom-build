@@ -1,28 +1,19 @@
 #!/bin/bash
-
 set -e
 
-VERSION=$1
+VERSION=$1  # e.g., v22.03.5
+TARGET=$2   # e.g., ath79/tiny/tplink_tl-wr720n-v3
 
-echo "Clone OpenWrt"
+echo "build target start ..."
 
-git clone https://github.com/openwrt/openwrt -b $VERSION openwrt
+git clone -b $VERSION https://github.com/openwrt/openwrt
 
 cd openwrt
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-make defconfig
-
-cd ..
-
-bash config.sh
-
-cd openwrt
+bash ../config.sh
 
 make defconfig
-
-echo "Start build"
-
-make -j$(nproc) || make -j1 V=s
+make -j$(nproc)
