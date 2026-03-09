@@ -13,13 +13,22 @@ CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr710n-v1=y
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 
-# USB
+# USB 支持
 CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb-ohci=y
+CONFIG_PACKAGE_kmod-usb-storage=y
 
-# USB打印
+# USB 文件系统
+CONFIG_PACKAGE_kmod-fs-ext4=y
+CONFIG_PACKAGE_block-mount=y
+
+# USB 打印
 CONFIG_PACKAGE_kmod-usb-printer=y
 CONFIG_PACKAGE_p910nd=y
+
+# 常用工具
+CONFIG_PACKAGE_htop=y
+CONFIG_PACKAGE_nano=y
 
 EOF
 
