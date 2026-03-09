@@ -1,28 +1,48 @@
-name: Build OpenWrt WR710N USB
+name: Build OpenWrt
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
+
   build:
     runs-on: ubuntu-22.04
+
     steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up build environment
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential git libncurses5-dev zlib1g-dev gawk \
-            flex gettext wget unzip python3 python3-distutils
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Run build script
-        run: bash build.sh v22.03.5 ath79/generic/tplink_tl-wr710n-usb
+    - name: Clone OpenWrt
+      run: |
+        git clone https://github.com/openwrt/openwrt.git
+        cd openwrt
+        git checkout v22.03.5
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: openwrt-wr710n-usb
-          path: openwrt/bin/targets/ath79/generic/
+    - name: Update feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    - name: Run diy script
+      run: |
+        cd openwrt
+        bash ../diy.sh
+
+    - name: Generate config
+      run: |
+        bash config.sh
+        cd openwrt
+        make defconfig
+
+    - name: Build firmware
+      run: |
+        cd openwrt
+        make -j$(nproc)
+
+    - name: Upload firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: openwrt-firmware
+        path: openwrt/bin/targets/
