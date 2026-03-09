@@ -30,7 +30,9 @@ jobs:
       # 3️⃣ 下载 OpenWrt 源码
       - name: Clone OpenWrt source
         run: |
-          git clone -b ${OPENWRT_VERSION} https://github.com/openwrt/openwrt openwrt
+         git clone -b openwrt-22.03 https://github.com/openwrt/openwrt openwrt
+         cd openwrt
+         git checkout v22.03.5
 
       # 4️⃣ 运行 DIY patch，生成 DTS + MK + .config
       - name: Apply DIY patch for WR720N-v3
