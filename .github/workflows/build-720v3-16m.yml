@@ -1,0 +1,60 @@
+name: OpenWrt WR720N-v3 Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    env:
+      OPENWRT_VERSION: "22.03.5"
+
+    steps:
+      # 1️⃣ Checkout 仓库
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ 安装依赖
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential asciidoc binutils bzip2 gawk gettext git \
+            libncurses5-dev libssl-dev python3 python3-distutils rsync \
+            unzip zlib1g-dev flex quilt libelf-dev bc ccache wget \
+            patch gzip bison perl-modules perl libncurses-dev libncursesw5-dev
+
+      # 3️⃣ 下载 OpenWrt 源码
+      - name: Clone OpenWrt source
+        run: |
+          git clone -b ${OPENWRT_VERSION} https://github.com/openwrt/openwrt openwrt
+
+      # 4️⃣ 运行 DIY patch，生成 DTS + MK + .config
+      - name: Apply DIY patch for WR720N-v3
+        run: bash diy1.sh
+
+      # 5️⃣ 更新 feeds
+      - name: Update and install feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make defconfig
+
+      # 6️⃣ 编译
+      - name: Build OpenWrt firmware
+        run: |
+          cd openwrt
+          make -j$(nproc) V=s
+
+      # 7️⃣ 上传生成的 sysupgrade 和 factory 固件
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wr720n-v3-firmware
+          path: |
+            openwrt/bin/targets/ath79/generic/*-sysupgrade.bin
+            openwrt/bin/targets/ath79/generic/*-factory.bin
