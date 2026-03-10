@@ -21,13 +21,19 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-        git clone -b openwrt-22.03 https://github.com/openwrt/openwrt
+        git clone -b openwrt-23.05 https://github.com/openwrt/openwrt
 
     - name: Run DIY script
       run: |
         chmod +x diy1.sh
         ./diy1.sh
-
+    
+    - name: Generate config
+      run: |
+        bash config.sh
+        cd openwrt
+        make defconfig
+        
     - name: Update feeds
       run: |
         cd openwrt
