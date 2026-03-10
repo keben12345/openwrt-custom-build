@@ -178,7 +178,7 @@ define Device/tplink_tl-wr720n-v3
   DEVICE_VARIANT := v3
   TPLINK_HWID := 0x07200103
   DEVICE_PACKAGES := \
-        kmod-usb2 \
+        kmod-usb-core \
         kmod-usb-ohci
   SUPPORTED_DEVICES += tplink,tl-wr720n-v3
 endef
