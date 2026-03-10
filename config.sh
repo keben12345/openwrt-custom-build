@@ -10,12 +10,14 @@ CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr720n-v3=y
 # LuCI
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-base=y
-CONFIG_LUCI_JSMIN=y
-CONFIG_LUCI_CSSTIDY=y
+CONFIG_PACKAGE_luci-mod-admin-full=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
-CONFIG_PACKAGE_luci-mod-admin-full=y
+CONFIG_PACKAGE_uhttpd=y
+CONFIG_PACKAGE_rpcd=y
+CONFIG_PACKAGE_rpcd-mod-luci=y
+CONFIG_PACKAGE_rpcd-mod-rrdns=y
 CONFIG_PACKAGE_luci-app-opkg=y
 # USB 支持
 # CONFIG_PACKAGE_kmod-usb2=y
