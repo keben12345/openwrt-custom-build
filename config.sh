@@ -30,7 +30,7 @@ CONFIG_PACKAGE_p910nd=y
 CONFIG_PACKAGE_luci-app-p910nd=y
 CONFIG_PACKAGE_luci-i18n-p910nd-zh-cn=y
 CONFIG_PACKAGE_kmod-usb2=y
-CONFIG_PACKAGE_kmod-usb-ohci=y
+# CONFIG_PACKAGE_kmod-usb-ohci=y
 # 常用工具
 CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_nano=y
