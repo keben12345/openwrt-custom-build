@@ -20,7 +20,8 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-        git clone --branch v23.05.0 https://github.com/openwrt/openwrt
+         git clone --depth 1 --branch v23.05.6 https://github.com/openwrt/openwrt
+         # git clone --branch v23.05.0 https://github.com/openwrt/openwrt
 
     - name: Run DIY script
       run: |
