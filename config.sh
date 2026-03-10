@@ -7,7 +7,7 @@ cat > openwrt/.config << 'EOF'
 
 CONFIG_TARGET_ath79=y
 CONFIG_TARGET_ath79_generic=y
-CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr710n-v1=y
+CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr720n-v3=y
 
 # LuCI
 CONFIG_PACKAGE_luci=y
@@ -33,6 +33,8 @@ CONFIG_PACKAGE_kmod-usb-printer=y
 CONFIG_PACKAGE_p910nd=y
 CONFIG_PACKAGE_luci-app-p910nd=y
 CONFIG_PACKAGE_luci-i18n-p910nd-zh-cn=y
+CONFIG_PACKAGE_kmod-usb2=y
+CONFIG_PACKAGE_kmod-usb-ohci=y
 
 # 常用工具
 CONFIG_PACKAGE_htop=y
