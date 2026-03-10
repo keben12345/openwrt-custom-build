@@ -24,8 +24,8 @@ CONFIG_PACKAGE_luci-mod-admin-full=y
 # CONFIG_PACKAGE_kmod-fs-ext4=y
 # CONFIG_PACKAGE_block-mount=y
 # USB 打印
-# CONFIG_PACKAGE_kmod-usb-printer=y
-# CONFIG_PACKAGE_p910nd=y
+CONFIG_PACKAGE_kmod-usb-printer=y
+CONFIG_PACKAGE_p910nd=y
 CONFIG_PACKAGE_luci-app-p910nd=y
 CONFIG_PACKAGE_luci-i18n-p910nd-zh-cn=y
 CONFIG_PACKAGE_kmod-usb2=y
