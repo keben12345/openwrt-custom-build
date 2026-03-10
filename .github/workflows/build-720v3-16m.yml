@@ -1,4 +1,4 @@
-nname: WR720N Build
+name: WR720N-v3 Build
 
 on:
   workflow_dispatch:
