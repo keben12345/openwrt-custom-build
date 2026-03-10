@@ -131,7 +131,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 			partition@20000 {
 				compatible = "tplink,firmware";
-				reg = <0x20000 0xfd0000>;
+				reg = <0x20000 0xfe0000>;
 				label = "firmware";
 			};
 
@@ -177,8 +177,10 @@ define Device/tplink_tl-wr720n-v3
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
   TPLINK_HWID := 0x07200103
-  DEVICE_PACKAGES := kmod-usb-chipidea2 kmod-usb-ledtrig-usbport
-  SUPPORTED_DEVICES += tl-wr720n
+  DEVICE_PACKAGES := \
+        kmod-usb2 \
+        kmod-usb-ohci
+  SUPPORTED_DEVICES += tplink,tl-wr720n-v3
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
