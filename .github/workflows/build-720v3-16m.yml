@@ -25,8 +25,8 @@ jobs:
 
     - name: Run DIY script
       run: |
-        chmod +x diy.sh
-        ./diy.sh
+        chmod +x diy1.sh
+        ./diy1.sh
 
     - name: Update feeds
       run: |
