@@ -1,4 +1,4 @@
-name: WR720N-v3 Build
+name: Build WR720N v3 Firmware
 
 on:
   workflow_dispatch:
@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Install dependencies
       run: |
@@ -20,12 +21,12 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-        git clone -b openwrt-22.03 https://github.com/openwrt/openwrt
+        git clone -b v22.03.5 https://github.com/openwrt/openwrt
 
-    - name: Run diy script
+    - name: Run DIY script
       run: |
-        chmod +x diy1.sh
-        ./diy1.sh
+        chmod +x diy.sh
+        ./diy.sh
 
     - name: Update feeds
       run: |
@@ -33,24 +34,15 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Load config
-      run: |
-        chmod +x config.sh
-        ./config.sh
-
-    - name: Download packages
+    - name: Build firmware
       run: |
         cd openwrt
         make defconfig
         make download -j8
-
-    - name: Build firmware
-      run: |
-        cd openwrt
         make -j$(nproc)
 
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: wr720n-firmware
+        name: wr720n-v3-firmware
         path: openwrt/bin/targets/
