@@ -10,6 +10,7 @@ CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr720n-v3=y
 # LuCI
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-base=y
+CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-mod-admin-full=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
