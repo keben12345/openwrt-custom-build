@@ -22,7 +22,12 @@ jobs:
       run: |
          git clone --depth 1 --branch v23.05.6 https://github.com/openwrt/openwrt
          # git clone --branch v23.05.0 https://github.com/openwrt/openwrt
-
+    
+    - name: Update feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
     - name: Run DIY script
       run: |
         chmod +x diy1.sh
@@ -35,12 +40,7 @@ jobs:
         cd openwrt
         make defconfig
 
-    - name: Update feeds
-      run: |
-        cd openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-
+    
     - name: Build firmware
       run: |
         cd openwrt
