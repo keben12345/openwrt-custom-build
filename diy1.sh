@@ -170,7 +170,6 @@ EOF
 ############################
 
 cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
-
 define Device/tplink_tl-wr720n-v3
   $(Device/tplink-16mlzma)
   SOC := ar9331
@@ -180,7 +179,7 @@ define Device/tplink_tl-wr720n-v3
   DEVICE_PACKAGES := \
         kmod-usb-core \
         kmod-usb-ohci 
-	    SUPPORTED_DEVICES += tplink,tl-wr720n-v3
+	    SUPPORTED_DEVICES += tl-wr720n-v3
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
