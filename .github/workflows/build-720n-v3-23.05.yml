@@ -20,7 +20,10 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-         git clone --depth 1 --branch v23.05.6 https://github.com/openwrt/openwrt
+         git clone https://github.com/openwrt/openwrt.git
+         cd openwrt
+         git checkout v22.03.5
+         # git clone --depth 1 --branch v23.05.6 https://github.com/openwrt/openwrt
          # git clone --branch v23.05.0 https://github.com/openwrt/openwrt
     
     - name: Update feeds
