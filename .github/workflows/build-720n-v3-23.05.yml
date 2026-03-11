@@ -1,4 +1,4 @@
-name: Build WR720N v3 OpenWrt-23.05
+name: Build WR720N v3 OpenWrt-21.02.7
 
 on:
   workflow_dispatch:
@@ -33,8 +33,8 @@ jobs:
         ./scripts/feeds install -a
     - name: Run DIY script
       run: |
-        chmod +x diy1.sh
-        ./diy1.sh
+        chmod +x diy2.sh
+        ./diy2.sh
 
     - name: Generate config
       run: |
