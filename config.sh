@@ -37,6 +37,7 @@ CONFIG_PACKAGE_kmod-usb2=y
 # 常用工具
 CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_nano=y
+CONFIG_PACKAGE_luci-app-opkg=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
 EOF
