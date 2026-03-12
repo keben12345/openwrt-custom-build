@@ -24,10 +24,14 @@ jobs:
         cd openwrt
         git checkout v19.07.10
 
-    - name: Apply patch
+    - name: Prepare WR720N v3 16MB
       run: |
         cd openwrt
-        git apply ../patch/wr720n16mb.patch
+        # 修改设备模板为 16MB flash
+        sed -i 's/\$\(Device\/tplink-4mlzma\)/$(Device\/tplink-16mlzma)/' target/linux/ar71xx/image/tiny-tp-link.mk
+        echo 'DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)' >> target/linux/ar71xx/image/tiny-tp-link.mk
+        # 可选：修改 rootfs 镜像大小
+        sed -i 's/IMAGE_SIZE := 3840k/IMAGE_SIZE := 15872k/' target/linux/ar71xx/image/common-tp-link.mk
 
     - name: Load config
       run: |
