@@ -35,7 +35,7 @@ jobs:
 
     - name: Load config
       run: |
-        cp ../config .config
+        cp ../.config1 .config
         make defconfig
 
     - name: Download sources
