@@ -12,6 +12,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Clone OpenWrt
+      run: |
+       git clone -b v19.07.10 https://github.com/openwrt/openwrt.git openwrt
+    
     # 2️⃣ 安装依赖
     - name: Install build dependencies
       run: |
