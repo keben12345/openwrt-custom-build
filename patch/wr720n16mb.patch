@@ -1,4 +1,4 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+dFrom 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: OpenWrt User <you@example.com>
 Date: Thu, 12 Mar 2026 18:50:00 +0800
 Subject: [PATCH] WR720N v3 16MB flash patch (device template + mach partition)
@@ -33,4 +33,4 @@ index 111111..222222 100644
 -    .size = 0x003d0000,
 +    .size = 0x00fb0000
 +
-+--
++-- 
