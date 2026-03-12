@@ -22,11 +22,10 @@ index abcdef..123456 100644
 +  CONSOLE := ttyATH0,115200
 +endef
  TARGET_DEVICES += tl-wr720n-v3
-
 diff --git a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
 index 111111..222222 100644
 --- a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
 +++ b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
 @@
 -    .size = 0x003d0000,
-+    .size = 0x00fb0000,  // 16MB flash firmware
++    .size = 0x00fb0000
