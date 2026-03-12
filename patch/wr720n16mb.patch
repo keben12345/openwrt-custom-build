@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: OpenWrt User <you@example.com>
-Date: Thu, 12 Mar 2026 18:50:00 +0800
-Subject: [PATCH] WR720N v3 16MB flash patch (device template + mach partition)
+Date: Thu, 12 Mar 2026 19:20:00 +0800
+Subject: [PATCH] WR720N v3 16MB flash patch
 
 ---
  target/linux/ar71xx/image/tiny-tp-link.mk                    | 15 +++++++++++++++
@@ -33,4 +33,5 @@ index 111111..222222 100644
 -    .size = 0x003d0000,
 +    .size = 0x00fb0000
 +
-+-- 
+-- 
+2.39.1
