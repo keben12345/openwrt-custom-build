@@ -33,6 +33,11 @@ jobs:
         # 可选：修改 rootfs 镜像大小
         sed -i 's/IMAGE_SIZE := 3840k/IMAGE_SIZE := 15872k/' target/linux/ar71xx/image/common-tp-link.mk
 
+    - name: Check files
+      run: |
+        pwd
+        ls -al ../
+        ls -al
     - name: Load config
       run: |
         cp ../.config1 .config
