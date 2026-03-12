@@ -1,13 +1,57 @@
 #!/bin/sh /etc/rc.common
 
+# Startup script for HP1020 + p910nd
+
+# Provides firmware load and printing server
+
+
+
 START=95
+
+STOP=10
+
+
 
 start() {
 
-    sleep 10
+    # 等待 USB lp0 出现
 
     if [ -e /dev/usb/lp0 ]; then
+
+        echo "HP1020 detected, loading firmware..."
+
+        # 加载固件
+
         cat /usr/share/hp1020/sihp1020.dl > /dev/usb/lp0
+
+        sleep 2  # 等待打印机初始化完成
+
+        
+
+        # 启动 p910nd 后台监听端口 9100
+
+        if ! pidof p910nd >/dev/null; then
+
+            echo "Starting p910nd..."
+
+            /usr/sbin/p910nd -b -o /dev/usb/lp0 0
+
+        fi
+
+    else
+
+        echo "No lp0 device, HP1020 not connected."
+
     fi
+
+}
+
+
+
+stop() {
+
+    echo "Stopping p910nd..."
+
+    /etc/init.d/p910nd stop
 
 }
