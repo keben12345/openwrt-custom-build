@@ -44,7 +44,9 @@ jobs:
         echo 'DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)' >> target/linux/ar71xx/image/tiny-tp-link.mk
 
     - name: Download sources
-      run: make download -j8
+      run: |
+        cd openwrt
+        make download -j8
    
     # 4️⃣ 编译固件
     - name: Build firmware
