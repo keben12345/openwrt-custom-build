@@ -40,6 +40,9 @@ jobs:
         ls -al
     - name: Load config
       run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
         cp ../.config1 .config
         make defconfig
 
