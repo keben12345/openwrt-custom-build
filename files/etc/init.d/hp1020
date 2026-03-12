@@ -1,0 +1,10 @@
+#!/bin/sh /etc/rc.common
+
+START=95
+
+start() {
+    sleep 10
+    if [ -e /dev/usb/lp0 ]; then
+        cat /usr/share/hp1020/sihp1020.dl > /dev/usb/lp0
+    fi
+}
