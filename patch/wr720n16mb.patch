@@ -1,0 +1,31 @@
+diff --git a/target/linux/ar71xx/image/tiny-tp-link.mk b/target/linux/ar71xx/image/tiny-tp-link.mk
+index abcdef..123456 100644
+--- a/target/linux/ar71xx/image/tiny-tp-link.mk
++++ b/target/linux/ar71xx/image/tiny-tp-link.mk
+@@
+-define Device/tl-wr720n-v3
+-  $(Device/tplink-4mlzma)
+-  DEVICE_TITLE := TP-LINK TL-WR720N v3
+-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2
+-  BOARDNAME := TL-WR720N-v3
+-  DEVICE_PROFILE := TLWR720
+-  TPLINK_HWID := 0x07200103
+-  CONSOLE := ttyATH0,115200
+-endef
++define Device/tl-wr720n-v3
++  $(Device/tplink-16mlzma)
++  DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)
++  DEVICE_PACKAGES := kmod-usb-core kmod-usb2
++  BOARDNAME := TL-WR720N-v3
++  DEVICE_PROFILE := TLWR720
++  TPLINK_HWID := 0x07200103
++  CONSOLE := ttyATH0,115200
++endef
+ TARGET_DEVICES += tl-wr720n-v3
+diff --git a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
+index 111111..222222 100644
+--- a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
++++ b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
+@@
+-    .size = 0x003d0000,
++    .size = 0x00fb0000,  // 16MB flash firmware
