@@ -33,7 +33,4 @@ index 111111..222222 100644
 -    .size = 0x003d0000,
 +    .size = 0x00fb0000
 +
-+-- 
- define Device/tplink_tl-wr810n-v1
-   $(Device/tplink-8mlzma)
-   SOC := qca9531
++--
