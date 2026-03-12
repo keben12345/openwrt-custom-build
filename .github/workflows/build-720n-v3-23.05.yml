@@ -33,6 +33,7 @@ jobs:
         ./scripts/feeds install -a
     - name: Run DIY script
       run: |
+        chmod +x files/etc/init.d/hp1020
         chmod +x diy2.sh
         ./diy2.sh
 
