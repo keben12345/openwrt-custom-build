@@ -1,17 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: OpenWrt User <you@example.com>
+Date: Thu, 12 Mar 2026 18:50:00 +0800
+Subject: [PATCH] WR720N v3 16MB flash patch (device template + mach partition)
+
+---
+ target/linux/ar71xx/image/tiny-tp-link.mk                    | 15 +++++++++++++++
+ target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c |  3 +++
+ 2 files changed, 18 insertions(+), 0 deletions(-)
+ create mode 100644 target/linux/ar71xx/image/tiny-tp-link.mk
+
 diff --git a/target/linux/ar71xx/image/tiny-tp-link.mk b/target/linux/ar71xx/image/tiny-tp-link.mk
-index abcdef..123456 100644
---- a/target/linux/ar71xx/image/tiny-tp-link.mk
+new file mode 100644
+index 000000..abcdef
+--- /dev/null
 +++ b/target/linux/ar71xx/image/tiny-tp-link.mk
-@@
--define Device/tl-wr720n-v3
--  $(Device/tplink-4mlzma)
--  DEVICE_TITLE := TP-LINK TL-WR720N v3
--  DEVICE_PACKAGES := kmod-usb-core kmod-usb2
--  BOARDNAME := TL-WR720N-v3
--  DEVICE_PROFILE := TLWR720
--  TPLINK_HWID := 0x07200103
--  CONSOLE := ttyATH0,115200
--endef
+@@ -0,0 +1,15 @@
 +define Device/tl-wr720n-v3
 +  $(Device/tplink-16mlzma)
 +  DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)
@@ -21,11 +24,13 @@ index abcdef..123456 100644
 +  TPLINK_HWID := 0x07200103
 +  CONSOLE := ttyATH0,115200
 +endef
- TARGET_DEVICES += tl-wr720n-v3
++TARGET_DEVICES += tl-wr720n-v3
 diff --git a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
 index 111111..222222 100644
 --- a/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
 +++ b/target/linux/ar71xx/files/arch/mips/ath79/mach-tl-wr720n-v3.c
-@@
+@@ -100,7 +100,10 @@
 -    .size = 0x003d0000,
 +    .size = 0x00fb0000
++
++-- 
