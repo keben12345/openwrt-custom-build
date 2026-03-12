@@ -1,4 +1,4 @@
-name: Build WR720N v3 16MB
+name: Build WR720N v3 16MB-19.07
 
 on:
   workflow_dispatch:
