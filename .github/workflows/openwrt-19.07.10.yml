@@ -46,7 +46,7 @@ jobs:
 
     # 5️⃣ 保存生成的固件
     - name: Upload firmware
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wr720n16mb-firmware
         path: openwrt/bin/targets/ar71xx/tiny/*.bin
