@@ -132,7 +132,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 				label = "firmware";
 			};
 
-			art: partition@7f0000 {
+			art: partition@ff0000 {
 				reg = <0xff0000 0x10000>;
 				label = "art";
 				read-only;
