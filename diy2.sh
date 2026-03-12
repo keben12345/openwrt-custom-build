@@ -167,7 +167,7 @@ define Device/tplink_tl-wr720n-v3
         kmod-usb-core \
         kmod-usb2 \
         kmod-usb-ledtrig-usbport
-  SUPPORTED_DEVICES += tl-wr720n-v3
+  SUPPORTED_DEVICES := tl-wr720n-v3
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
