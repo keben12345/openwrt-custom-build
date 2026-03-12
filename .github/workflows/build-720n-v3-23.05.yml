@@ -31,9 +31,9 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        chmod +x files/etc/init.d/hp1020
-        chmod +x files/etc/hotplug.d/usb/20-hp1020
-        chmod +x files/etc/uci-defaults/99-printer
+        chmod +x ../files/etc/init.d/hp1020
+        chmod +x ../files/etc/hotplug.d/usb/20-hp1020
+        chmod +x ../files/etc/uci-defaults/99-printer
     - name: Run DIY script
       run: |
         chmod +x diy2.sh
