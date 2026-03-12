@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+
+sleep 10
+
+
+
+if [ -e /dev/usb/lp0 ]; then
+
+    cat /usr/share/hp1020/sihp1020.dl > /dev/usb/lp0
+
+fi
+
+
+
+/etc/init.d/p910nd start
+
+
+
+exit 0
