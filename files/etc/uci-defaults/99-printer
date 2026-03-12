@@ -1,0 +1,6 @@
+#!/bin/sh
+
+/etc/init.d/p910nd enable
+/etc/init.d/hp1020 enable
+
+exit 0
