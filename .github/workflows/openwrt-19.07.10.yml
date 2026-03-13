@@ -14,7 +14,7 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-       git clone -b v19.07.10 https://github.com/keben12345/openwrt-ax1800.git openwrt
+       git clone -b v19.07.10 https://github.com/openwrt/openwrt.git openwrt
     
     - name: Install build dependencies
       run: |
@@ -42,7 +42,7 @@ jobs:
         cp ../.config1 .config
         make defconfig
         # 修改设备模板为 16MB flash
-        # sed -i 's/\$\(Device\/tplink-4mlzma\)/$(Device\/tplink-16mlzma)/' target/linux/ar71xx/image/tiny-tp-link.mk
+        sed -i '/Device\/tl-wr720n-v3/,/endef/ s/tplink-4mlzma/tplink-16mlzma/' target/linux/ar71xx/image/tiny-tp-link.mk
         # echo 'DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)' >> target/linux/ar71xx/image/tiny-tp-link.mk
 
     - name: Download sources
