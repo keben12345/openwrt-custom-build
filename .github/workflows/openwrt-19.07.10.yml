@@ -38,6 +38,9 @@ jobs:
         # 更新 feeds 并安装所有软件包
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        chmod +x ../files/etc/init.d/hp1020
+        chmod +x ../files/etc/hotplug.d/usb/20-hp1020
+        chmod +x ../files/etc/rc.local
         # 复制仓库根目录的 .config1 为 .config
         cp ../.config1 .config
         make defconfig
