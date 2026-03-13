@@ -20,14 +20,13 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-         git clone https://github.com/openwrt/openwrt.git
-         cd openwrt
-         git checkout v21.02.7
+         git clone -b v21.02.7 https://github.com/openwrt/openwrt.git openwrt
+         # cd openwrt
+         # git checkout v21.02.7
          # git clone --depth 1 --branch v23.05.6 https://github.com/openwrt/openwrt
          # git clone --branch v23.05.0 https://github.com/openwrt/openwrt
     - name: Copy custom files
       run: |
-        cd ..
         mkdir -p openwrt/files/etc/init.d
         mkdir -p openwrt/files/etc/hotplug.d/usb
         mkdir -p openwrt/files/usr/share/hp1020
