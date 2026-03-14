@@ -10,7 +10,6 @@ CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr720n-v3=y
 # LuCI
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-base=y
-CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-mod-admin-full=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
@@ -42,6 +41,10 @@ CONFIG_PACKAGE_luci-app-opkg=y
 CONFIG_PACKAGE_luci-app-watchcat=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn=y
 EOF
+# 关闭 IPv6 节省空间
+CONFIG_IPV6=n
+CONFIG_PACKAGE_ipv6helper=n
 
 echo "config.sh done."
