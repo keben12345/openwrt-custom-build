@@ -130,9 +130,10 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			};
 
 			partition@20000 {
-                label = "firmware";
-                reg = <0x020000 0xfb0000>;
-            };
+				compatible = "tplink,firmware";
+				reg = <0x020000 0xfb0000>;
+				label = "firmware";
+			};
 
 			art: partition@ff0000 {
 				reg = <0xff0000 0x10000>;
@@ -170,7 +171,7 @@ EOF
 
 cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
 define Device/tplink_tl-wr720n-v3
-  $(Device/tplink-16mlzma)
+  $(Device/tplink-8mlzma)
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
