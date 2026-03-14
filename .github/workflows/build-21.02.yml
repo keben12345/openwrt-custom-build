@@ -49,5 +49,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: openwrt-firmware
+        name: openwrt-firmware-21.02-7
         path: openwrt/bin/targets/
