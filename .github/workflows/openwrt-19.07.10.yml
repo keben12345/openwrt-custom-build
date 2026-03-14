@@ -47,8 +47,8 @@ jobs:
         make defconfig
         # 修改设备模板为 16MB flash
         # 扩大 WR720N firmware 到 16MB
-        sed -i '/Device\/tl-wr720n-v3/,/endef/ a\  IMAGE_SIZE := 15872k' target/linux/ar71xx/image/tiny-tp-link.mk
-        # sed -i '/Device\/tl-wr720n-v3/,/endef/ s/tplink-4mlzma/tplink-16mlzma/' target/linux/ar71xx/image/tiny-tp-link.mk
+        # sed -i '/Device\/tl-wr720n-v3/,/endef/ a\  IMAGE_SIZE := 15872k' target/linux/ar71xx/image/tiny-tp-link.mk
+        sed -i '/Device\/tl-wr720n-v3/,/endef/ s/tplink-4mlzma/tplink-8mlzma/' target/linux/ar71xx/image/tiny-tp-link.mk
         # echo 'DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)' >> target/linux/ar71xx/image/tiny-tp-link.mk
 
     - name: Download sources
