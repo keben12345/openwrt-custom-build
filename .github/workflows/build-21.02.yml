@@ -16,7 +16,14 @@ jobs:
     - name: Clone OpenWrt
       run: |
         git clone -b v21.02.7 https://github.com/openwrt/openwrt.git openwrt
-
+    - name: Copy custom files
+      run: |
+        mkdir -p openwrt/files/etc/init.d
+        mkdir -p openwrt/files/etc/hotplug.d/usb
+        mkdir -p openwrt/files/usr/share/hp1020
+        cp -r files/* openwrt/files/
+        chmod +x openwrt/files/etc/init.d/hp1020
+        chmod +x openwrt/files/etc/hotplug.d/usb/20-hp1020
     - name: Update feeds
       run: |
         cd openwrt
