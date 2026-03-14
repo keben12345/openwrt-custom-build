@@ -130,10 +130,9 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			};
 
 			partition@20000 {
-				compatible = "firmware";
-				reg = <0x020000 0xfd0000>;
-				label = "firmware";
-			};
+                label = "firmware";
+                reg = <0x020000 0xfb0000>;
+            };
 
 			art: partition@ff0000 {
 				reg = <0xff0000 0x10000>;
