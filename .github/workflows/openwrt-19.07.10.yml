@@ -43,10 +43,12 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         # 复制仓库根目录的 .config1 为 .config
-        cp ../.config1 .config
+        cp ../.config2 .config
         make defconfig
         # 修改设备模板为 16MB flash
-        sed -i '/Device\/tl-wr720n-v3/,/endef/ s/tplink-4mlzma/tplink-16mlzma/' target/linux/ar71xx/image/tiny-tp-link.mk
+        # 扩大 WR720N firmware 到 16MB
+        sed -i '/Device\/tl-wr720n-v3/,/endef/ a\  IMAGE_SIZE := 15872k' target/linux/ar71xx/image/tiny-tp-link.mk
+        # sed -i '/Device\/tl-wr720n-v3/,/endef/ s/tplink-4mlzma/tplink-16mlzma/' target/linux/ar71xx/image/tiny-tp-link.mk
         # echo 'DEVICE_TITLE := TP-LINK TL-WR720N v3 (16MB flash)' >> target/linux/ar71xx/image/tiny-tp-link.mk
 
     - name: Download sources
@@ -64,5 +66,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: wr720n16mb-firmware
+        name: wr720n16mb-firmware-19.07
         path: openwrt/bin/targets/ar71xx/tiny/*.bin
