@@ -124,14 +124,14 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			#size-cells = <1>;
 
 			uboot: partition@0 {
-				reg = <0x0 0x20000>;
+				reg = <0x0 0x020000>;
 				label = "u-boot";
 				read-only;
 			};
 
 			partition@20000 {
-				compatible = "tplink,firmware";
-				reg = <0x20000 0xfd0000>;
+				compatible = "firmware";
+				reg = <0x020000 0xfd0000>;
 				label = "firmware";
 			};
 
