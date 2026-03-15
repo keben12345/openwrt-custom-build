@@ -22,8 +22,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		led-failsafe = &led_system;
 		led-running = &led_system;
 		led-upgrade = &led_system;
-	        label-mac-device = &eth0;
-        };
+	};
 
 	keys {
 		compatible = "gpio-keys";
@@ -40,7 +39,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		compatible = "gpio-leds";
 
 		led_system: system {
-			label = "green:system";
+			label = "blue:system";
 			gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
 		};
 	};
@@ -50,12 +49,42 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		regulator-name = "usb_vbus";
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
-		gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
+		gpio = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 	};
 };
 
- 
+&eth0 {
+	status = "okay";
+	mtd-mac-address = <&art 0x0>;
+
+	gmac-config {
+		device = <&gmac>;
+		switch-phy-swap = <0>;
+		switch-phy-addr-swap = <0>;
+	};
+};
+
+&eth1 {
+	status = "okay";
+	mtd-mac-address = <&art 0x0>;
+};
+
+&usb {
+	status = "okay";
+	dr_mode = "host";
+	vbus-supply = <&reg_usb_vbus>;
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&wmac {
+	status = "okay";
+	mtd-cal-data = <&art 0x1000>;
+};
+
 &spi {
 	status = "okay";
 
@@ -69,91 +98,24 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			#address-cells = <1>;
 			#size-cells = <1>;
 
-			uboot: partition@0 {
-				reg = <0x0 0x20000>;
+			partition@0 {
 				label = "u-boot";
+				reg = <0x000000 0x020000>;
 				read-only;
-
-				nvmem-layout {
-					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
-
-					macaddr_uboot_1fc00: macaddr@1fc00 {
-						compatible = "mac-base";
-						reg = <0x1fc00 0x6>;
-						#nvmem-cell-cells = <1>;
-					};
-				};
 			};
 
 			partition@20000 {
-				compatible = "tplink,firmware";
-				reg = <0x020000 0xfb0000>;
 				label = "firmware";
+				reg = <0x020000 0xfb0000>;
 			};
 
-			partition@ff0000 {
-				reg = <0xff0000 0x10000>;
+			art: partition@ff0000 {
 				label = "art";
+				reg = <0xff0000 0x010000>;
 				read-only;
-
-				nvmem-layout {
-					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
-
-					cal_art_1000: calibration@1000 {
-						reg = <0x1000 0x440>;
-					};
-				};
 			};
 		};
 	};
-};
-
-&eth0 {
-	nvmem-cells = <&macaddr_uboot_1fc00 0>;
-	nvmem-cell-names = "mac-address";
-};
-
-&eth1 {
-	nvmem-cells = <&macaddr_uboot_1fc00 (-1)>;
-	nvmem-cell-names = "mac-address";
-};
-
-&wmac {
-	nvmem-cells = <&macaddr_uboot_1fc00 0>, <&cal_art_1000>;
-	nvmem-cell-names = "mac-address", "calibration";
-};
-&eth0 {
-	status = "okay";
-
-	gmac-config {
-		device = <&gmac>;
-
-		switch-phy-addr-swap = <0>;
-		switch-phy-swap = <0>;
-	};
-};
-
-&eth1 {
-	status = "okay";
-};
-
-&usb {
-	status = "okay";
-
-	dr_mode = "host";
-	vbus-supply = <&reg_usb_vbus>;
-};
-
-&usb_phy {
-	status = "okay";
-};
-
-&wmac {
-	status = "okay";
 };
 EOF
 
