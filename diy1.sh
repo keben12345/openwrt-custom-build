@@ -77,7 +77,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
 };
 
-&eth0 {
+&eth1 {
 	status = "okay";
 	
 	nvmem-cells = <&macaddr_uboot>;
@@ -90,7 +90,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
 };
 
-&eth1 {
+&eth0 {
 	status = "okay";
     mac-address-increment = <1>;
 };
