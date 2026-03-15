@@ -17,11 +17,15 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 #include <dt-bindings/input/input.h>
 
 / {
+	model = "TP-Link TL-WR720N v3";
+	compatible = "tplink,tl-wr720n-v3", "qca,ar9331";
+
 	aliases {
 		led-boot = &led_system;
 		led-failsafe = &led_system;
 		led-running = &led_system;
 		led-upgrade = &led_system;
+		label-mac-device = &eth0;
 	};
 
 	keys {
@@ -39,7 +43,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		compatible = "gpio-leds";
 
 		led_system: system {
-			label = "blue:system";
+			label = "wr720n:blue:system";
 			gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
 		};
 	};
@@ -52,37 +56,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		gpio = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 	};
-};
-
-&eth0 {
-	status = "okay";
-	mtd-mac-address = <&art 0x0>;
-
-	gmac-config {
-		device = <&gmac>;
-		switch-phy-swap = <0>;
-		switch-phy-addr-swap = <0>;
-	};
-};
-
-&eth1 {
-	status = "okay";
-	mtd-mac-address = <&art 0x0>;
-};
-
-&usb {
-	status = "okay";
-	dr_mode = "host";
-	vbus-supply = <&reg_usb_vbus>;
-};
-
-&usb_phy {
-	status = "okay";
-};
-
-&wmac {
-	status = "okay";
-	mtd-cal-data = <&art 0x1000>;
 };
 
 &spi {
@@ -107,14 +80,62 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			partition@20000 {
 				label = "firmware";
 				reg = <0x020000 0xfb0000>;
+				compatible = "tplink,firmware";
 			};
 
-			art: partition@ff0000 {
+			partition@ff0000 {
 				label = "art";
 				reg = <0xff0000 0x010000>;
 				read-only;
 			};
 		};
+	};
+};
+
+&eth0 {
+	status = "okay";
+	phy-mode = "mii";
+
+	nvmem-cells = <&macaddr_uboot>;
+	nvmem-cell-names = "mac-address";
+
+	gmac-config {
+		device = <&gmac>;
+		switch-phy-swap = <0>;
+		switch-phy-addr-swap = <0>;
+	};
+};
+
+&eth1 {
+	status = "okay";
+};
+
+&wmac {
+	status = "okay";
+	mtd-cal-data = <&art 0x1000>;
+};
+
+&usb {
+	status = "okay";
+	dr_mode = "host";
+	vbus-supply = <&reg_usb_vbus>;
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&gmac {
+	status = "okay";
+};
+
+&uboot {
+	compatible = "nvmem-cells";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	macaddr_uboot: macaddr@124e0 {
+		reg = <0x124e0 0x6>;
 	};
 };
 EOF
