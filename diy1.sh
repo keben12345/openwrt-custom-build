@@ -71,10 +71,10 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth0 {
 	status = "okay";
-	phy-mode = "mii";
-
+	
 	nvmem-cells = <&macaddr_uboot>;
 	nvmem-cell-names = "mac-address";
+    mac-address-increment = <1>;
 
 	gmac-config {
 		device = <&gmac>;
@@ -85,6 +85,8 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth1 {
 	status = "okay";
+    nvmem-cells = <&macaddr_uboot>;
+    nvmem-cell-names = "mac-address";
 };
 
 &usb {
