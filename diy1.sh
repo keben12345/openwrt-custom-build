@@ -102,7 +102,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	status = "okay";
 
 	mtd-cal-data = <&art 0x1000>;
-	nvmem-cells = <&macaddr_uboot_1fc00>;
+	nvmem-cells = <&macaddr_uboot>;
 	nvmem-cell-names = "mac-address";
 };
 
