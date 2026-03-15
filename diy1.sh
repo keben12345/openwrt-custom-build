@@ -23,14 +23,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		label-mac-device = &wmac;
 	};
 
-	&gpio {
-	switch_reset {
-		gpio-hog;
-		gpios = <11 GPIO_ACTIVE_LOW>;
-		output-high;
-		line-name = "switch-reset";
-	    };
-  };
+	
 	keys {
 		compatible = "gpio-keys";
 
@@ -77,7 +70,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
 };
 
-&eth1 {
+&eth0 {
 	status = "okay";
 	
 	nvmem-cells = <&macaddr_uboot>;
@@ -90,7 +83,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
 };
 
-&eth0 {
+&eth1 {
 	status = "okay";
     mac-address-increment = <1>;
 };
