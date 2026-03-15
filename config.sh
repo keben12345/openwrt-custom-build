@@ -42,7 +42,7 @@ CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn=y
 EOF
 # 关闭 IPv6 节省空间
-CONFIG_IPV6=n
-CONFIG_PACKAGE_ipv6helper=n
+# CONFIG_IPV6=n
+# CONFIG_PACKAGE_ipv6helper=n
 
 echo "config.sh done."
