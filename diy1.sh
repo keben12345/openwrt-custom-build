@@ -164,7 +164,7 @@ EOF
 # Device profile
 ############################
 
-cat > target/linux/ath79/image/generic-tp-link.mk << 'EOF'
+cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
 define Device/tplink_tl-wr720n-v3
   $(Device/tplink-8mlzma)
   SOC := ar9331
