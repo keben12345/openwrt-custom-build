@@ -70,19 +70,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 };
 
 &eth0 {
-    status = "okay";
-    mtd-mac-address = <&art 0x0>;
+	status = "okay";
+	phy-mode = "mii";
 
-    gmac-config {
-        device = <&gmac>;
-        switch-phy-addr-swap = <0>;
-        switch-phy-swap = <0>;
-    };
+	nvmem-cells = <&macaddr_uboot>;
+	nvmem-cell-names = "mac-address";
+
+	gmac-config {
+		device = <&gmac>;
+		switch-phy-swap = <0>;
+		switch-phy-addr-swap = <0>;
+	};
 };
 
 &eth1 {
 	status = "okay";
-	mtd-mac-address = <&art 0x0>;
 };
 
 &usb {
@@ -143,8 +145,8 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	#address-cells = <1>;
 	#size-cells = <1>;
 
-	macaddr_uboot_1fc00: macaddr@1fc00 {
-		reg = <0x1fc00 0x6>;
+	macaddr_uboot: macaddr@124e0 {
+		reg = <0x124e0 0x6>;
 	};
 };
 EOF
