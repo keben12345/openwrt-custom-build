@@ -1,13 +1,61 @@
 // SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 
-#include "ar9331_tplink_tl-wr710n.dtsi"
+#!/bin/bash
+
+cd openwrt
+
+echo "Adding WR720N v3 support"
+
+############################
+# WR720N DTS
+############################
+
+cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
+#include "ar9331.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
 
 / {
 	aliases {
-		label-mac-device = &eth0;
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
+	        label-mac-device = &eth0;
+        };
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			linux,code = <KEY_RESTART>;
+			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+			debounce-interval = <60>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_system: system {
+			label = "green:system";
+			gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	reg_usb_vbus: regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "usb_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
 	};
 };
 
+ 
 &spi {
 	status = "okay";
 
@@ -25,47 +73,127 @@
 				reg = <0x0 0x20000>;
 				label = "u-boot";
 				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					macaddr_uboot_1fc00: macaddr@1fc00 {
+						compatible = "mac-base";
+						reg = <0x1fc00 0x6>;
+						#nvmem-cell-cells = <1>;
+					};
+				};
 			};
 
 			partition@20000 {
 				compatible = "tplink,firmware";
-				reg = <0x20000 0x7d0000>;
+				reg = <0x020000 0xfb0000>;
 				label = "firmware";
 			};
 
-			art: partition@7f0000 {
-				reg = <0x7f0000 0x10000>;
+			partition@ff0000 {
+				reg = <0xff0000 0x10000>;
 				label = "art";
 				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					cal_art_1000: calibration@1000 {
+						reg = <0x1000 0x440>;
+					};
+				};
 			};
 		};
 	};
 };
 
 &eth0 {
-	nvmem-cells = <&macaddr_uboot_1fc00>;
+	nvmem-cells = <&macaddr_uboot_1fc00 0>;
 	nvmem-cell-names = "mac-address";
 };
 
 &eth1 {
-	nvmem-cells = <&macaddr_uboot_1fc00>;
+	nvmem-cells = <&macaddr_uboot_1fc00 (-1)>;
 	nvmem-cell-names = "mac-address";
-	mac-address-increment = <(-1)>;
 };
 
 &wmac {
-	mtd-cal-data = <&art 0x1000>;
-
-	nvmem-cells = <&macaddr_uboot_1fc00>;
-	nvmem-cell-names = "mac-address";
+	nvmem-cells = <&macaddr_uboot_1fc00 0>, <&cal_art_1000>;
+	nvmem-cell-names = "mac-address", "calibration";
 };
+&eth0 {
+	status = "okay";
 
-&uboot {
-	compatible = "nvmem-cells";
-	#address-cells = <1>;
-	#size-cells = <1>;
+	gmac-config {
+		device = <&gmac>;
 
-	macaddr_uboot_1fc00: macaddr@1fc00 {
-		reg = <0x1fc00 0x6>;
+		switch-phy-addr-swap = <0>;
+		switch-phy-swap = <0>;
 	};
 };
+
+&eth1 {
+	status = "okay";
+};
+
+&usb {
+	status = "okay";
+
+	dr_mode = "host";
+	vbus-supply = <&reg_usb_vbus>;
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&wmac {
+	status = "okay";
+};
+EOF
+
+
+cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n-v3.dts << 'EOF'
+#include "ar9331_tplink_tl-wr720n.dtsi"
+
+/ {
+	model = "TP-Link TL-WR720N v3";
+	compatible = "tplink,tl-wr720n-v3", "tplink,tl-wr720n", "qca,ar9331";
+};
+EOF
+
+############################
+# Device profile
+############################
+
+cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
+define Device/tplink_tl-wr720n-v3
+  $(Device/tplink-8mlzma)
+  SOC := ar9331
+  DEVICE_MODEL := TL-WR720N
+  DEVICE_VARIANT := v3
+  TPLINK_HWID := 0x07200103
+  DEVICE_PACKAGES := \
+        kmod-usb-core \
+        kmod-usb-ohci 
+	    SUPPORTED_DEVICES += tl-wr720n-v3
+endef
+TARGET_DEVICES += tplink_tl-wr720n-v3
+EOF
+
+############################
+# build config
+############################
+
+cat > .config << 'EOF'
+CONFIG_TARGET_ath79=y
+CONFIG_TARGET_ath79_generic=y
+CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr720n-v3=y
+EOF
+
+echo "WR720N patch applied"
