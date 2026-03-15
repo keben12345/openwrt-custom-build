@@ -29,7 +29,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
-			gpios = <&gpio 11 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 		};
 
@@ -69,26 +69,20 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
 };
 
-&eth0 {		/* WAN interface, initialized last as eth1 */
-	status = "okay";
+&eth0 {
+    status = "okay";
+    mtd-mac-address = <&art 0x0>;
 
-	nvmem-cells = <&macaddr_uboot_1fc00>;
-	nvmem-cell-names = "mac-address";
-	mac-address-increment = <1>;
-
-	gmac-config {
-		device = <&gmac>;
-
-		switch-phy-addr-swap = <0>;
-		switch-phy-swap = <0>;
-	};
+    gmac-config {
+        device = <&gmac>;
+        switch-phy-addr-swap = <0>;
+        switch-phy-swap = <0>;
+    };
 };
 
-&eth1 {		/* LAN interface, initialized first as eth0 */
+&eth1 {
 	status = "okay";
-
-	nvmem-cells = <&macaddr_uboot_1fc00>;
-	nvmem-cell-names = "mac-address";
+	mtd-mac-address = <&art 0x0>;
 };
 
 &usb {
