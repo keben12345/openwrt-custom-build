@@ -23,6 +23,14 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		label-mac-device = &wmac;
 	};
 
+	&gpio {
+	switch_reset {
+		gpio-hog;
+		gpios = <11 GPIO_ACTIVE_LOW>;
+		output-high;
+		line-name = "switch-reset";
+	    };
+  };
 	keys {
 		compatible = "gpio-keys";
 
@@ -74,8 +82,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	
 	nvmem-cells = <&macaddr_uboot>;
 	nvmem-cell-names = "mac-address";
-    mac-address-increment = <1>;
-
+    
 	gmac-config {
 		device = <&gmac>;
 		switch-phy-swap = <0>;
@@ -85,8 +92,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth1 {
 	status = "okay";
-    nvmem-cells = <&macaddr_uboot>;
-    nvmem-cell-names = "mac-address";
+    mac-address-increment = <1>;
 };
 
 &usb {
@@ -102,10 +108,8 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &wmac {
 	status = "okay";
-
 	mtd-cal-data = <&art 0x1000>;
-	nvmem-cells = <&macaddr_uboot>;
-	nvmem-cell-names = "mac-address";
+	
 };
 
 &spi {
