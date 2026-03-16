@@ -104,7 +104,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	status = "okay";
 
 	mtd-cal-data = <&art 0x1000>;
-	mtd-mac-address = <&u_boot 0x1fc00>;
+	mtd-mac-address = <&uboot 0x1fc00>;
 };
 
 &spi {
