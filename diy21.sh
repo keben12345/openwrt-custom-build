@@ -168,7 +168,7 @@ EOF
 
 cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
 define Device/tplink_tl-wr720n-v3
-  $(Device/tplink-8mlzma)
+  $(Device/tplink-16mlzma)
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
