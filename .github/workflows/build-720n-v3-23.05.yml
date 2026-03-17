@@ -1,4 +1,4 @@
-name: Build WR720N v3 OpenWrt-21.02.7
+name: Build WR720N v3 OpenWrt-23.05.6
 
 on:
   workflow_dispatch:
@@ -61,5 +61,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: wr720n-v3-firmware
+        name: wr720n-v3-firmware-23.05.6
         path: openwrt/bin/targets/ath79/generic/
