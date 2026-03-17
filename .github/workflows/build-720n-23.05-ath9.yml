@@ -23,15 +23,10 @@ jobs:
         git clone https://github.com/openwrt/openwrt.git
         cd openwrt
         git checkout v23.05.6
-    - name: Set git user
-      run: |
-       cd openwrt
-       git config --global user.name "OpenWrt CI"
-       git config --global user.email "ci@example.com"
     - name: Apply patch
       run: |
         cd openwrt
-        git am ../patches/999-wr720n-v3-git.patch
+        patch -p1 < ../patches/999-wr720n-v3.patch
 
     - name: Update feeds
       run: |
