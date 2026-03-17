@@ -27,8 +27,7 @@ jobs:
     - name: Apply patch
       run: |
         cd openwrt
-        cp ../patches/999-wr720n-v3.patch .
-        patch -p1 < 999-wr720n-v3.patch
+        git am ../patches/999-wr720n-v3-git.patch
 
     - name: Update feeds
       run: |
