@@ -3,7 +3,6 @@ CONFIG_TARGET_ar71xx_tiny=y
 CONFIG_TARGET_ar71xx_tiny_DEVICE_tl-wr720n-v3=y
 
 CONFIG_PACKAGE_luci=y
-CONFIG_PACKAGE_wpad-openssl=y
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_luci-app-ttyd=y
@@ -14,3 +13,10 @@ CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb-printer=y
 
 CONFIG_PACKAGE_p910nd=y
+# 禁用所有小版本
+# CONFIG_PACKAGE_wpad-mini is not set
+# CONFIG_PACKAGE_wpad-basic is not set
+
+# 强制用完整版本
+CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_hostapd-openssl=y
