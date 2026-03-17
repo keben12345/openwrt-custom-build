@@ -75,5 +75,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: wr720n-v3-firmware
+        name: wr720n-v3-23.05-ath9-firmware
         path: openwrt/bin/targets/ath79/tiny/
