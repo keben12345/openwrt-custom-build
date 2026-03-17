@@ -172,10 +172,7 @@ define Device/tplink_tl-wr720n-v3
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
   TPLINK_HWID := 0x07200103
-  DEVICE_PACKAGES := \
-        kmod-usb-core \
-        kmod-usb2 \
-        kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 
   SUPPORTED_DEVICES := tl-wr720n-v3
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
