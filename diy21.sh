@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd openwrt
+cd openwrt || exit 1
 
 echo "Adding WR720N v3 support"
 
@@ -167,7 +167,14 @@ EOF
 # Device profile
 ############################
 
-cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
+python3 - <<'PY'
+from pathlib import Path
+
+path = Path("target/linux/ath79/image/generic-tp-link.mk")
+text = path.read_text()
+
+anchor = "TARGET_DEVICES += tplink_tl-wr710n-v2.1"
+insert = """
 define Device/tplink_tl-wr720n-v3
   $(Device/tplink-16mlzma)
   SOC := ar9331
@@ -178,7 +185,19 @@ define Device/tplink_tl-wr720n-v3
   SUPPORTED_DEVICES += tl-wr720n-v3
 endef
 TARGET_DEVICES += tplink_tl-wr720n-v3
-EOF
+"""
+
+if "define Device/tplink_tl-wr720n-v3" not in text:
+    if anchor in text:
+        text = text.replace(anchor, anchor + "\n" + insert, 1)
+        path.write_text(text)
+        print("Inserted tplink_tl-wr720n-v3 after tplink_tl-wr710n-v2.1")
+    else:
+        raise SystemExit("Anchor not found: " + anchor)
+else:
+    print("tplink_tl-wr720n-v3 already exists, skip")
+PY
+
 
 ############################
 # build config
