@@ -29,21 +29,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
-			gpios = <&gpio 11 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 		};
 		
 		sw1 {
 			label = "sw1";
 			linux,code = <BTN_0>;
-			gpios = <&gpio 18 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 		};
 		
 		sw2 {
 			label = "sw2";
 			linux,code = <BTN_1>;
-			gpios = <&gpio 20 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 20 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 		};
 	};
