@@ -23,8 +23,6 @@ CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 # CONFIG_PACKAGE_kmod-usb-ohci=y
 # CONFIG_PACKAGE_kmod-usb-storage=y
 # USB 文件系统
-CONFIG_PACKAGE_kmod-usb-core=y
-CONFIG_PACKAGE_kmod-usb2=y
 # CONFIG_PACKAGE_kmod-fs-ext4=y
 # CONFIG_PACKAGE_block-mount=y
 # USB 打印
