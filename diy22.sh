@@ -69,7 +69,30 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	};
  
 };
+usb@1b000000 {
+			compatible = "generic-ehci";
+			reg = <0x1b000000 0x200>;
 
+			interrupts = <3>;
+			resets = <&rst 5>;
+			reset-names = "usb-host";
+
+			has-transaction-translator;
+			caps-offset = <0x100>;
+
+			phy-names = "usb-phy";
+			phys = <&usb_phy>;
+
+			status = "disabled";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			hub_port: port@1 {
+				reg = <1>;
+				#trigger-source-cells = <0>;
+			};
+		};	
 &spi {
 	status = "okay";
 
@@ -162,7 +185,7 @@ define Device/tplink_tl-wr720n-v3
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb-chipidea2 kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
