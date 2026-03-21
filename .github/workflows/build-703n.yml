@@ -37,7 +37,9 @@ jobs:
         sed -i 's/0x3f0000/0xff0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 加入 USB GPIO 供电
         sed -i 's/regulator-max-microvolt = <5000000>;/regulator-max-microvolt = <5000000>;\
-        \tgpio = <\&gpio 8 GPIO_ACTIVE_HIGH>;/' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        \tgpio = <\&gpio 8 GPIO_ACTIVE_HIGH>;\
+        \tenable-active-high;\
+        \tregulator-always-on;/' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
     - name: Load config
       run: |
         cd openwrt
