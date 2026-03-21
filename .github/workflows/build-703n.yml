@@ -33,8 +33,8 @@ jobs:
         sed -i 's/$(Device\/tplink-4mlzma)/$(Device\/tplink-16mlzma)/g' target/linux/ath79/image/tiny-tp-link.mk
 
         # 修改 DTS 分区为 16MB
-        sed -i 's/0x3c0000/0xfc0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
-        sed -i 's/0x7a0000/0xfa0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        sed -i 's/0x3d0000/0xfd0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        sed -i 's/0x3f0000/0xff0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
 
     - name: Load config
       run: |
