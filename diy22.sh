@@ -156,13 +156,13 @@ EOF
 # Device profile
 ############################
 
-cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
+cat >> target/linux/ath79/image/tiny-tp-link.mk << 'EOF'
 define Device/tplink_tl-wr720n-v3 
   $(Device/tplink-16mlzma) 
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb-chipidea2 kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ehci-platform kmod-usb-ohci-platform
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
