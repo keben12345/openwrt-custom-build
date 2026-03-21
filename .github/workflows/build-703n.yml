@@ -20,7 +20,7 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-        git clone https://github.com/openwrt/openwrt -b openwrt-21.02.7
+        git clone -b v21.02.7 https://github.com/openwrt/openwrt.git openwrt
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
