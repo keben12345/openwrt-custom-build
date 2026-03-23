@@ -167,44 +167,10 @@ TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
 
 ############################
-# Fix AR9330 USB (EHCI)
+# Fix USB (very important)
 ############################
+sed -i 's/"qca,ar9330-ehci"/"generic-ehci"/g' target/linux/ath79/dts/ar9330.dtsi
 
-mkdir -p target/linux/ath79/patches-5.4
-
-cat > target/linux/ath79/patches-5.4/999-ar9330-usb.patch << 'EOF'
---- a/target/linux/ath79/dts/ar9330.dtsi
-+++ b/target/linux/ath79/dts/ar9330.dtsi
-@@
--       usb@1b000000 {
--               compatible = "qca,ar9330-ehci";
--               reg = <0x1b000000 0x200>;
--               interrupts = <3>;
--               resets = <&rst 5>;
--               reset-names = "usb-host";
--               phy-names = "usb-phy";
--               phys = <&usb_phy>;
--               status = "disabled";
--       };
-+       usb: usb@1b000000 {
-+               compatible = "generic-ehci";
-+               reg = <0x1b000000 0x200>;
-+
-+               interrupts = <3>;
-+               resets = <&rst 5>;
-+               reset-names = "usb-host";
-+
-+               has-transaction-translator;
-+               caps-offset = <0x100>;
-+
-+               phy-names = "usb-phy";
-+               phys = <&usb_phy>;
-+
-+               status = "disabled";
-+
-+               #address-cells = <1>;
-+               #size-cells = <0>;
-+       };
-EOF
+sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offset = <0x100>;' target/linux/ath79/dts/ar9330.dtsi
 
 echo "WR720N patch applied"
