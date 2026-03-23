@@ -36,8 +36,11 @@ jobs:
         sed -i 's/0x3d0000/0xfd0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         sed -i 's/0x3f0000/0xff0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 加入 USB GPIO 供电
-        sed -i 's/regulator-max-microvolt = <5000000>;/regulator-max-microvolt = <5000000>;\
-        \tgpio = <\&gpio 8 GPIO_ACTIVE_HIGH>;/' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        sed -i '/enable-active-high;/a\        gpios = <\&gpio 8 GPIO_ACTIVE_HIGH>;\n        regulator-always-on;' \
+        target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        # Fix USB
+        sed -i 's/"qca,ar9330-ehci"/"generic-ehci"/g' target/linux/ath79/dts/ar9330.dtsi
+        sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offset = <0x100>;' target/linux/ath79/dts/ar9330.dtsi
     - name: Load config
       run: |
         cd openwrt
