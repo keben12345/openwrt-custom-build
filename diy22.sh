@@ -60,7 +60,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		regulator-name = "usb_vbus";
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
-		gpio = <&gpio 8 GPIO_ACTIVE_HIGH>;
+		gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 		regulator-always-on;
 	};
@@ -123,6 +123,8 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &usb {
 	compatible = "generic-ehci";
+    has-transaction-translator;
+    caps-offset = <0x100>;
 	dr_mode = "host";
 	vbus-supply = <&reg_usb_vbus>;
 	status = "okay";
@@ -153,6 +155,7 @@ EOF
 ############################
 # Device profile
 ############################
+sed -i '/tplink_tl-wr720n-v3/,+8d' target/linux/ath79/image/generic-tp-link.mk
 
 cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
 define Device/tplink_tl-wr720n-v3 
@@ -160,7 +163,7 @@ define Device/tplink_tl-wr720n-v3
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb-core kmod-usblp
+  DEVICE_PACKAGES := kmod-usb-core kmod-usblp kmod-usb2
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
