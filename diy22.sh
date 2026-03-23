@@ -64,7 +64,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		regulator-max-microvolt = <5000000>;
 		gpio = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
-		regulator-boot-on;
 		regulator-always-on;
 	};
  
