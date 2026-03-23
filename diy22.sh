@@ -161,7 +161,7 @@ define Device/tplink_tl-wr720n-v3
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
@@ -169,8 +169,44 @@ TARGET_DEVICES += tplink_tl-wr720n-v3
 EOF
 
 ############################
-# build config
+# Fix AR9330 USB (EHCI)
 ############################
 
+mkdir -p target/linux/ath79/patches-5.4
+
+cat > target/linux/ath79/patches-5.4/999-ar9330-usb.patch << 'EOF'
+--- a/target/linux/ath79/dts/ar9330.dtsi
++++ b/target/linux/ath79/dts/ar9330.dtsi
+@@
+-       usb@1b000000 {
+-               compatible = "qca,ar9330-ehci";
+-               reg = <0x1b000000 0x200>;
+-               interrupts = <3>;
+-               resets = <&rst 5>;
+-               reset-names = "usb-host";
+-               phy-names = "usb-phy";
+-               phys = <&usb_phy>;
+-               status = "disabled";
+-       };
++       usb: usb@1b000000 {
++               compatible = "generic-ehci";
++               reg = <0x1b000000 0x200>;
++
++               interrupts = <3>;
++               resets = <&rst 5>;
++               reset-names = "usb-host";
++
++               has-transaction-translator;
++               caps-offset = <0x100>;
++
++               phy-names = "usb-phy";
++               phys = <&usb_phy>;
++
++               status = "disabled";
++
++               #address-cells = <1>;
++               #size-cells = <0>;
++       };
+EOF
 
 echo "WR720N patch applied"
