@@ -92,7 +92,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 				label = "firmware";
 			};
 
-			art: partition@3f0000 {
+			art: partition@ff0000 {
 				reg = <0xff0000 0x10000>;
 				label = "art";
 				read-only;
@@ -122,6 +122,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 };
 
 &usb {
+	compatible = "generic-ehci";
 	dr_mode = "host";
 	vbus-supply = <&reg_usb_vbus>;
 	status = "okay";
@@ -159,7 +160,7 @@ define Device/tplink_tl-wr720n-v3
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-core kmod-usblp
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
