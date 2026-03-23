@@ -160,7 +160,7 @@ define Device/tplink_tl-wr720n-v3
   SOC := ar9331
   DEVICE_MODEL := TL-WR720N
   DEVICE_VARIANT := v3
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-core kmod-usblp
+  DEVICE_PACKAGES := kmod-usb-core kmod-usblp
   TPLINK_HWID := 0x07200103
   SUPPORTED_DEVICES += tl-wr720n
 endef
