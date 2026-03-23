@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd openwrt
-
 echo "Adding WR720N v3 support"
 
 ############################
