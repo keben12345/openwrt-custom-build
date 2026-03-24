@@ -40,9 +40,14 @@ jobs:
         # 修改 WR703N 为 16MB flash
         sed -i 's/$(Device\/tplink-4mlzma)/$(Device\/tplink-16mlzma)/g' target/linux/ath79/image/tiny-tp-link.mk
         # 修改eth0 mac地址
-        sed -i '/&eth0 {/,/};/ s#0x1fc00#0x124e0#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        # sed -i '/&eth0 {/,/};/ s#0x1fc00#0x124e0#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        sed -i '/&eth0 {/,/};/ s#mtd-mac-address = <&uboot 0x1fc00>;#mtd-mac-address = <&uboot 0x124e0>;\
+        \tmac-address-increment = <0>;#' \
+        target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 2. eth1 MAC
-        sed -i '/&eth1 {/,/};/ a\ \ \ \ mtd-mac-address = <\&uboot 0x124e6>;' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
+        sed -i '/&eth1 {/,/};/ s/status = "okay";/status = "okay";\
+        \tmac-address-increment = <1>;/' \
+        target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 3. 开启双口
         sed -i '/gmac-config {/,/};/ s#switch-phy-addr-swap = <0>#switch-phy-addr-swap = <1>#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         sed -i '/gmac-config {/,/};/ s#switch-phy-swap = <0>#switch-phy-swap = <1>#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
