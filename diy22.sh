@@ -100,6 +100,16 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		};
 	};
 };
+# MDIO + Switch（WR720N 必须）
+&mdio {
+    status = "okay";
+
+    switch0: switch@0 {
+        compatible = "qca,ar9331-switch";
+        reg = <0>;
+        reset-gpios = <&gpio 0 GPIO_ACTIVE_LOW>;
+    };
+};
 
 &eth0 {
 	status = "okay";
@@ -126,6 +136,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
     has-transaction-translator;
     caps-offset = <0x100>;
 	dr_mode = "host";
+	maximum-speed = "full-speed";
 	vbus-supply = <&reg_usb_vbus>;
 	status = "okay";
 };
