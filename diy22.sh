@@ -62,7 +62,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		regulator-max-microvolt = <5000000>;
 		gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
-		regulator-boot-on;
 	};
  
 };
@@ -100,15 +99,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		};
 	};
 };
-# MDIO + Switch（WR720N 必须）
-&mdio {
-    status = "okay";
-
-    switch0: switch@0 {
-        compatible = "qca,ar9331-switch";
-        reg = <0>;
-      };
-};
 
 &eth0 {
 	status = "okay";
@@ -135,7 +125,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
     has-transaction-translator;
     caps-offset = <0x100>;
 	dr_mode = "host";
-	maximum-speed = "full-speed";
 	vbus-supply = <&reg_usb_vbus>;
 	status = "okay";
 };
@@ -184,6 +173,7 @@ EOF
 # Fix USB (very important)
 ############################
 sed -i 's/"chipidea,usb2"/"generic-ehci"/g' target/linux/ath79/dts/ar9330.dtsi
+
 sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offset = <0x100>;' target/linux/ath79/dts/ar9330.dtsi
 sed -i '/usb@1b000000 {/,/};/ s/status = "disabled"/status = "okay"/' target/linux/ath79/dts/ar9330.dtsi
 
