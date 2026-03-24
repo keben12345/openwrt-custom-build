@@ -62,7 +62,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		regulator-max-microvolt = <5000000>;
 		gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
-		regulator-always-on;
+		regulator-boot-on;
 	};
  
 };
@@ -107,8 +107,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
     switch0: switch@0 {
         compatible = "qca,ar9331-switch";
         reg = <0>;
-        reset-gpios = <&gpio 0 GPIO_ACTIVE_LOW>;
-    };
+      };
 };
 
 &eth0 {
