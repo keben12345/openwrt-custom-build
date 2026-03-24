@@ -39,7 +39,8 @@ jobs:
 
         # 修改 WR703N 为 16MB flash
         sed -i 's/$(Device\/tplink-4mlzma)/$(Device\/tplink-16mlzma)/g' target/linux/ath79/image/tiny-tp-link.mk
-
+        # 修改eth0 mac地址
+        sed -i '/&eth0 {/,/};/ s/mtd-mac-address = <&uboot 0x1fc00>/mtd-mac-address = <&uboot 0x1240f>/' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 修改 DTS 分区为 16MB
         sed -i 's/0x3d0000/0xfd0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         sed -i 's/0x3f0000/0xff0000/g' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
