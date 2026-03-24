@@ -174,7 +174,6 @@ EOF
 # Fix USB (very important)
 ############################
 sed -i 's/"chipidea,usb2"/"generic-ehci"/g' target/linux/ath79/dts/ar9330.dtsi
-
 sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offset = <0x100>;' target/linux/ath79/dts/ar9330.dtsi
 sed -i '/usb@1b000000 {/,/};/ s/status = "disabled"/status = "okay"/' target/linux/ath79/dts/ar9330.dtsi
 
