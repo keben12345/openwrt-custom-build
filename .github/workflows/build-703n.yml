@@ -48,7 +48,7 @@ jobs:
         sed -i '/&eth1 {/,/};/ s/status = "okay";/status = "okay";\
         \tmtd-mac-address = <\&uboot 0x124e0>;\
         \tmac-address-increment = <1>;/' \
-        target/linux/ath79/dts/xxxx.dtsi
+        target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # 3. 开启双口
         # sed -i '/gmac-config {/,/};/ s#switch-phy-addr-swap = <0>#switch-phy-addr-swap = <1>#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
         # sed -i '/gmac-config {/,/};/ s#switch-phy-swap = <0>#switch-phy-swap = <1>#' target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi
