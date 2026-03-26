@@ -110,6 +110,15 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		switch-phy-swap = <0>;
 	};
 };
+&eth1 {
+	status = "disabled";
+};
+
+&builtin_switch {
+	status = "okay";
+	enable-vlan;
+};
+
 &usb {
 	compatible = "generic-ehci";
     has-transaction-translator;
