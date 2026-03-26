@@ -172,9 +172,13 @@ sed -i 's/"chipidea,usb2"/"generic-ehci"/g' target/linux/ath79/dts/ar9330.dtsi
 
 sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offset = <0x100>;' target/linux/ath79/dts/ar9330.dtsi
 sed -i '/usb@1b000000 {/,/};/ s/status = "disabled"/status = "okay"/' target/linux/ath79/dts/ar9330.dtsi
+
+# Fix 02_network
 sed -i '/case "\$board" in/a\
-tplink,tl-wr720n-v3)\
+tplink,tl-wr720n-v3|\\\
+tplink,tl-wr720n)\
 \tucidef_add_switch "switch0" \
 \t\t"0@eth0" "1:lan" "3:wan"\
-\t;;' target/linux/ath79/base-files/etc/board.d/02_network
+\t;;' target/linux/ath79/generic/base-files/etc/board.d/02_network
+
 echo "WR720N patch applied"
