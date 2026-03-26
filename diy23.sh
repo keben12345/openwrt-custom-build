@@ -110,12 +110,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		switch-phy-swap = <0>;
 	};
 };
-
-&switch0 {
-	status = "okay";
-	enable-vlan;
-};
-
 &usb {
 	compatible = "generic-ehci";
     has-transaction-translator;
@@ -177,7 +171,7 @@ sed -i '/usb@1b000000 {/,/};/ s/status = "disabled"/status = "okay"/' target/lin
 grep -q "tplink,tl-wr720n-v3" target/linux/ath79/generic/base-files/etc/board.d/02_network || cat >> target/linux/ath79/generic/base-files/etc/board.d/02_network << 'EOF'
 tplink,tl-wr720n-v3|tplink,tl-wr720n)
     ucidef_add_switch "switch0" \
-        "0@eth0" "1:lan" "3:wan"
+        "0@eth0" "1:lan" "2:lan" "3:wan" "4:lan"
     ;;
 EOF
 
