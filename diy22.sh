@@ -5,7 +5,7 @@ echo "Adding WR720N v3 support"
 ############################
 # WR720N DTS
 ############################
-
+cd openwrt
 cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 #include "ar9331.dtsi"
 
