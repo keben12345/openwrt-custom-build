@@ -141,19 +141,6 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		};
 	};
 };
-&uboot {
-    mac_eth0: macaddr@124e0 {
-        reg = <0x124e0 0x6>;
-    };
-
-    mac_eth1: macaddr@124e6 {
-        reg = <0x124e6 0x6>;
-    };
-
-    mac_wifi: macaddr@1fc00 {
-        reg = <0x1fc00 0x6>;
-    };
-};
 EOF
 
 
