@@ -72,7 +72,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &eth0 {
 	status = "okay";
 
-	mtd-mac-address = <&uboot 0x1fc00>;
+	mtd-mac-address = <&uboot 0x124e0>;
 
 	gmac-config {
 		device = <&gmac>;
@@ -85,7 +85,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &eth1 {
 	status = "okay";
 
-	mtd-mac-address = <&uboot 0x1fc00>;
+	mtd-mac-address = <&uboot 0x124e0>;
 	mtd-mac-address-increment = <(-1)>;
 };
 
