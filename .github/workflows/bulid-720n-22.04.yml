@@ -41,7 +41,7 @@ jobs:
        
     - name: Run DIY script
       run: |
-        chmod +x diy2.sh
+        chmod +x diy24.sh
         ./diy2.sh
 
     - name: Generate config
