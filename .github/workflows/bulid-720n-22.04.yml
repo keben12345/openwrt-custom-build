@@ -41,6 +41,7 @@ jobs:
        
     - name: Run DIY script
       run: |
+        dos2unix diy22.sh
         chmod +x diy22.sh
         ./diy22.sh
 
