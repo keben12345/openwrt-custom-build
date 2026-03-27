@@ -72,7 +72,9 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &eth0 {
 	status = "okay";
 
-	mtd-mac-address = <&uboot 0x124e0>;
+	nvmem-cells = <&mac_eth0>;
+    nvmem-cell-names = "mac-address";
+
 
 	gmac-config {
 		device = <&gmac>;
@@ -85,8 +87,9 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &eth1 {
 	status = "okay";
 
-	mtd-mac-address = <&uboot 0x124e0>;
-	mtd-mac-address-increment = <(-1)>;
+	nvmem-cells = <&mac_eth1>;
+    nvmem-cell-names = "mac-address";
+
 };
 
 &usb {
@@ -103,8 +106,10 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &wmac {
 	status = "okay";
 
-	mtd-cal-data = <&art 0x1000>;
-	mtd-mac-address = <&uboot 0x1fc00>;
+	 mtd-cal-data = <&art 0x1000>;
+    nvmem-cells = <&mac_wifi>;
+    nvmem-cell-names = "mac-address";
+
 };
 
 &spi {
@@ -124,6 +129,10 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 				reg = <0x0 0x20000>;
 				label = "u-boot";
 				read-only;
+				compatible = "nvmem-cells";
+                #address-cells = <1>;
+                #size-cells = <1>;
+
 			};
 
 			partition@20000 {
@@ -139,6 +148,19 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 			};
 		};
 	};
+};
+&uboot {
+    mac_eth0: macaddr@124e0 {
+        reg = <0x124e0 0x6>;
+    };
+
+    mac_eth1: macaddr@124e6 {
+        reg = <0x124e6 0x6>;
+    };
+
+    mac_wifi: macaddr@1fc00 {
+        reg = <0x1fc00 0x6>;
+    };
 };
 EOF
 
