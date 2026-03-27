@@ -71,7 +71,8 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth0 {
     status = "okay";
-    mtd-mac-address = <&spi 0x124e0>;
+    nvmem-cells = <&mac_eth0>;
+    nvmem-cell-names = "mac-address";
 
     gmac-config {
         device = <&gmac>;
@@ -82,13 +83,14 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth1 {
     status = "okay";
-    mtd-mac-address = <&spi 0x124e6>;
+    nvmem-cells = <&mac_eth1>;
+    nvmem-cell-names = "mac-address";
 };
 
 &wmac {
     status = "okay";
-    mtd-cal-data = <&art 0x1000>;
-    mtd-mac-address = <&spi 0x1fc00>;
+    nvmem-cells = <&mac_wifi>;
+    nvmem-cell-names = "mac-address";
 };
 
 &usb {
@@ -100,7 +102,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &usb_phy {
     status = "okay";
 };
+&uboot {
+    compatible = "nvmem-cells";
 
+    mac_eth0: macaddr@124e0 {
+        reg = <0x124e0 0x6>;
+    };
+
+    mac_eth1: macaddr@124e6 {
+        reg = <0x124e6 0x6>;
+    };
+
+    mac_wifi: macaddr@1fc00 {
+        reg = <0x1fc00 0x6>;
+    };
+};
 &spi {
     status = "okay";
 
