@@ -103,21 +103,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 &eth0 {
 	status = "okay";
 
-	mtd-mac-address = <&uboot 0x124e0>;
+	nvmem-cells = <&macaddr_uboot_mac0>;
+    nvmem-cell-names = "mac-address";
 
 	gmac-config {
 		device = <&gmac>;
-
 		switch-phy-addr-swap = <0>;
 		switch-phy-swap = <0>;
 	};
 };
 
 &eth1 {
-	status = "okay";
-
-	mtd-mac-address = <&uboot 0x124e0>;
-	mtd-mac-address-increment = <(-1)>;
+    status = "okay";
+    nvmem-cells = <&macaddr_uboot_mac0>;
+    nvmem-cell-names = "mac-address";
+    mac-address-increment = <1>; /* LAN = WAN + 1 */
 };
 
 &usb {
@@ -137,7 +137,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	status = "okay";
 
 	mtd-cal-data = <&art 0x1000>;
-	mtd-mac-address = <&uboot 0x1fc00>;
+	nvmem-cells = <&macaddr_art_wifi>;
+    nvmem-cell-names = "mac-address";
+
+};
+/* U-Boot MAC provider */
+&uboot {
+    compatible = "nvmem-cells";
+
+    macaddr_uboot_mac0: macaddr@124e0 {
+        reg = <0x124e0 0x6>; /* WAN MAC */
+    };
+
+    macaddr_art_wifi: macaddr@1fc00 {
+        reg = <0x1fc00 0x6>; /* Wi-Fi MAC */
+    };
 };
 EOF
 
