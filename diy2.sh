@@ -145,7 +145,7 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 	#address-cells = <1>;
 	#size-cells = <1>;
 
-	macaddr_uboot_1fc00: macaddr@1fc00 {
+	macaddr_uboot: macaddr@1fc00 {
 		reg = <0x1fc00 0x6>;
 	};
 };
