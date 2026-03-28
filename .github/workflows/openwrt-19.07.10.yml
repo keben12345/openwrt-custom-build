@@ -40,7 +40,7 @@ jobs:
         cd openwrt
         git checkout v19.07.10
         # 加入 SSR Plus feed
-        echo "src-git helloworld https://github.com/fw876/helloworld" >> feeds.conf.default
+        echo "src-git helloworld https://github.com/fw876/helloworld;5e6a8d" >> feeds.conf.default
         # 更新 feeds
         ./scripts/feeds update base
         ./scripts/feeds update packages
