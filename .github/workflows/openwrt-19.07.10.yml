@@ -39,6 +39,10 @@ jobs:
       run: |
         cd openwrt
         git checkout v19.07.10
+        - name: Add SSR Plus feed
+           echo "src-git helloworld https://github.com/fw876/helloworld" >> feeds.conf.default
+        #   ./scripts/feeds update helloworld
+        #   ./scripts/feeds install luci-app-ssr-plus
         # 更新 feeds 并安装所有软件包
         ./scripts/feeds update -a
         ./scripts/feeds install -a
