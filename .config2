@@ -21,31 +21,31 @@ CONFIG_PACKAGE_wpad-basic is not set
 CONFIG_PACKAGE_zram-swap=y
 CONFIG_PACKAGE_luci-app-zram=y
 # SSR Plus
-CONFIG_PACKAGE_luci-app-ssr-plus=y
-CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
+#CONFIG_PACKAGE_luci-app-ssr-plus=y
+#CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
 # 关闭默认 dnsmasq
 # CONFIG_PACKAGE_dnsmasq is not set
-CONFIG_PACKAGE_dnsmasq-full=y
-CONFIG_PACKAGE_dnsmasq_full_ipset=y
-CONFIG_PACKAGE_dnsmasq_full_redirhost=y
-CONFIG_XRAY_CORE_COMPRESS_UPX=y
-CONFIG_PACKAGE_xray-core=y
-CONFIG_PACKAGE_xray-plugin=y
+#CONFIG_PACKAGE_dnsmasq-full=y
+#CONFIG_PACKAGE_dnsmasq_full_ipset=y
+#CONFIG_PACKAGE_dnsmasq_full_redirhost=y
+#CONFIG_XRAY_CORE_COMPRESS_UPX=y
+#CONFIG_PACKAGE_xray-core=y
+#CONFIG_PACKAGE_xray-plugin=y
 
 
-CONFIG_PACKAGE_iptables=y
-CONFIG_PACKAGE_iptables-mod-tproxy=y
-CONFIG_PACKAGE_ipset=y
-CONFIG_PACKAGE_kmod-ipt-tproxy=y
-CONFIG_PACKAGE_kmod-ipt-ipset=y
-CONFIG_PACKAGE_kmod-ipt-nat=y
+#CONFIG_PACKAGE_iptables=y
+#CONFIG_PACKAGE_iptables-mod-tproxy=y
+#CONFIG_PACKAGE_ipset=y
+#CONFIG_PACKAGE_kmod-ipt-tproxy=y
+#CONFIG_PACKAGE_kmod-ipt-ipset=y
+#CONFIG_PACKAGE_kmod-ipt-nat=y
 
-CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
-CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
-CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir=y
+#CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+#CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
+#CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir=y
 
-CONFIG_PACKAGE_dns2socks=y
-CONFIG_PACKAGE_microsocks=y
+#CONFIG_PACKAGE_dns2socks=y
+#CONFIG_PACKAGE_microsocks=y
 
 # 关闭 IPv6 节省空间
 # CONFIG_IPV6=n
