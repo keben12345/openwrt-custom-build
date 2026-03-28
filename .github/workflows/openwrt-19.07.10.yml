@@ -39,9 +39,20 @@ jobs:
       run: |
         cd openwrt
         git checkout v19.07.10
+        # 加入 SSR Plus feed
+        echo "src-git helloworld https://github.com/fw876/helloworld" >> feeds.conf.default
+        # 更新 feeds
+        ./scripts/feeds update base
+        ./scripts/feeds update packages
+        ./scripts/feeds update luci
+        ./scripts/feeds update routing
+        ./scripts/feeds update helloworld
+
+        # 安装 SSR Plus
+        ./scripts/feeds install luci-app-ssr-plus
         # 更新 feeds 并安装所有软件包
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+        #./scripts/feeds update -a
+        #./scripts/feeds install -a
         # 复制仓库根目录的 .config1 为 .config
         cp ../.config2 .config
         make defconfig
