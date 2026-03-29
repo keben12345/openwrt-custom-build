@@ -1,0 +1,48 @@
+name: Build OpenWrt
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Clone OpenWrt
+      run: |
+        git clone https://github.com/openwrt/openwrt.git
+        cd openwrt
+        git checkout v21.02.7
+
+    - name: Update feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    - name: Run diy script
+      run: |
+        cd openwrt
+        bash ../diy.sh
+
+    - name: Generate config
+      run: |
+        bash config.sh
+        cd openwrt
+        make defconfig
+
+    - name: Build firmware
+      run: |
+        cd openwrt
+        make -j$(nproc)
+
+    - name: Upload firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: openwrt-firmware
+        path: openwrt/bin/targets/
