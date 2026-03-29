@@ -16,7 +16,7 @@ jobs:
     # 2️⃣ Clone OpenWrt 21.02
     - name: Clone OpenWrt
       run: |
-        git clone -b v21.02.13 https://github.com/openwrt/openwrt.git openwrt
+        git clone -b v21.02.7 https://github.com/openwrt/openwrt.git openwrt
 
     # 3️⃣ Install dependencies
     - name: Install build dependencies
