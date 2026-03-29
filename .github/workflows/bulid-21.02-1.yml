@@ -1,0 +1,117 @@
+name: Build WR720N v3 21.02 Single LAN
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+
+    # 1️⃣ Checkout
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2️⃣ Clone OpenWrt 21.02
+    - name: Clone OpenWrt
+      run: |
+        git clone -b v21.02.13 https://github.com/openwrt/openwrt.git openwrt
+
+    # 3️⃣ Install dependencies
+    - name: Install build dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential clang flex bison g++ gawk gcc-multilib g++-multilib \
+          gettext git libncurses5-dev libssl-dev rsync unzip zlib1g-dev file wget python2
+        sudo ln -sf /usr/bin/python2 /usr/bin/python
+
+    # 4️⃣ Apply WR720N single LAN patch
+    - name: Apply WR720N DTS patch
+      run: |
+        cd openwrt
+        # DTS
+        mkdir -p target/linux/ath79/dts
+        cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
+#include "ar9331.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	aliases {
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
+		label-mac-device = &eth0;
+	};
+
+	keys { ... }   # 保留按键和 LED 配置（同前面 DTS）
+	
+	&eth0 { status = "okay"; nvmem-cells = <&macaddr_uboot_mac0>; nvmem-cell-names = "mac-address"; };
+	&eth1 { status = "disabled"; };
+	&builtin_switch { status = "okay"; enable-vlan; };
+	&usb { status = "okay"; compatible = "generic-ehci"; dr_mode = "host"; vbus-supply = <&reg_usb_vbus>; has-transaction-translator; caps-offset = <0x100>; };
+	&wmac { status = "okay"; mtd-cal-data = <&art 0x1000>; nvmem-cells = <&macaddr_art_wifi>; nvmem-cell-names = "mac-address"; };
+	&uboot { compatible = "nvmem-cells"; macaddr_uboot_mac0: macaddr@124e0 { reg = <0x124e0 0x6>; }; macaddr_art_wifi: macaddr@1fc00 { reg = <0x1fc00 0x6>; }; };
+};
+EOF
+
+        cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n-v3.dts << 'EOF'
+#include "ar9331_tplink_tl-wr720n.dtsi"
+
+/ {
+	model = "TP-Link TL-WR720N v3";
+	compatible = "tplink,tl-wr720n-v3", "tplink,tl-wr720n", "qca,ar9331";
+};
+EOF
+
+        # Device profile
+        sed -i '/tplink_tl-wr720n-v3/,+8d' target/linux/ath79/image/generic-tp-link.mk
+        cat >> target/linux/ath79/image/generic-tp-link.mk << 'EOF'
+define Device/tplink_tl-wr720n-v3
+  $(Device/tplink-16mlzma)
+  SOC := ar9331
+  DEVICE_MODEL := TL-WR720N
+  DEVICE_VARIANT := v3
+  DEVICE_PACKAGES := kmod-usb-core kmod-usblp kmod-usb2
+  TPLINK_HWID := 0x07200103
+  SUPPORTED_DEVICES += tl-wr720n
+endef
+TARGET_DEVICES += tplink_tl-wr720n-v3
+EOF
+
+        # Fix 02_network
+        grep -q "tplink,tl-wr720n-v3" target/linux/ath79/generic/base-files/etc/board.d/02_network || cat >> target/linux/ath79/generic/base-files/etc/board.d/02_network << 'EOF'
+tplink,tl-wr720n-v3|tplink,tl-wr720n)
+    ucidef_add_switch "switch0" \
+        "0@eth0" "1:lan" "2:lan" "3:wan" "4:lan"
+    ;;
+EOF
+
+    # 5️⃣ Update feeds
+    - name: Update feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    # 6️⃣ Copy custom config
+    - name: Copy custom config
+      run: |
+        cd openwrt
+        cp ../.config1 .config
+        make defconfig
+
+    # 7️⃣ Build firmware
+    - name: Build firmware
+      run: |
+        cd openwrt
+        make -j1 V=s
+
+    # 8️⃣ Upload firmware
+    - name: Upload firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: wr720n21.02-singlelan-firmware
+        path: openwrt/bin/targets/ar71xx/tiny/*.bin
