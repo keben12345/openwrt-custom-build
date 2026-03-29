@@ -75,14 +75,20 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 		spi-max-frequency = <25000000>;
 
 		partitions {
-			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
-
 			uboot: partition@0 {
-				reg = <0x0 0x20000>;
 				label = "u-boot";
+				reg = <0x000000 0x020000>;
 				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					u_boot_mac: macaddr@1fc00 {
+						reg = <0x1fc00 0x6>;
+					};
+				};
 			};
 
 			partition@20000 {
@@ -102,22 +108,21 @@ cat > target/linux/ath79/dts/ar9331_tplink_tl-wr720n.dtsi << 'EOF'
 
 &eth0 {
 	status = "okay";
-	mtd-mac-address = <&uboot 0x124e0>;
-
-	gmac-config {
-		device = <&gmac>;
-		switch-phy-addr-swap = <0>;
-		switch-phy-swap = <0>;
-	};
+	mtd-mac-address = <&u_boot_mac 0x0>;
 };
+
 &eth1 {
-	status = "disabled";
+	status = "okay";
+	mtd-mac-address = <&u_boot_mac 0x0>;
+	mtd-mac-address-increment = <1>;
 };
 
-&builtin_switch {
+&wmac {
 	status = "okay";
-	enable-vlan;
+	mtd-cal-data = <&art 0x1000>;
+	mtd-mac-address = <&art 0x0>;
 };
+
 
 &usb {
 	compatible = "generic-ehci";
