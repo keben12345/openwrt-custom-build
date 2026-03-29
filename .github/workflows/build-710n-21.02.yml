@@ -1,4 +1,4 @@
-name: Build OpenWrt
+name: Build OpenWrt-710n-v21.02.7
 
 on:
   workflow_dispatch:
