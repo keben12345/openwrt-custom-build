@@ -32,7 +32,7 @@ jobs:
 
     - name: Generate config
       run: |
-        bash config.sh
+        bash config1.sh
         cd openwrt
         make defconfig
 
