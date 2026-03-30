@@ -28,7 +28,7 @@ jobs:
     - name: Run diy script
       run: |
         cd openwrt
-        bash ../diy.sh
+        bash ../diy25.sh
 
     - name: Generate config
       run: |
