@@ -6,7 +6,7 @@ echo "Generate OpenWrt config..."
 cat > openwrt/.config << 'EOF'
 CONFIG_TARGET_ath79=y
 CONFIG_TARGET_ath79_generic=y
-CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr710n=y
+CONFIG_TARGET_ath79_generic_DEVICE_tplink_tl-wr710n-v1=y
 # LuCI
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-mod-admin-full=y
