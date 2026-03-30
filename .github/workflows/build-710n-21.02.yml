@@ -19,12 +19,18 @@ jobs:
         cd openwrt
         git checkout v21.02.7
 
-    - name: Update feeds
+    - name: Copy custom files
       run: |
+        mkdir -p openwrt/files/etc/init.d
+        mkdir -p openwrt/files/etc/hotplug.d/usb
+        mkdir -p openwrt/files/usr/share/hp1020
+        cp -r files/* openwrt/files/
+        chmod +x openwrt/files/etc/init.d/hp1020
+        chmod +x openwrt/files/etc/hotplug.d/usb/20-hp1020    
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-
+        
     - name: Run diy script
       run: |
         cd openwrt
