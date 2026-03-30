@@ -25,10 +25,8 @@ sed -i '/usb@1b000000 {/a\        has-transaction-translator;\n        caps-offs
 sed -i '/usb@1b000000 {/,/};/ s/status = "disabled"/status = "okay"/' target/linux/ath79/dts/ar9330.dtsi
 
 # 7. 改设备名为 WR720N v3
-#sed -i 's/TL-WR710N/TL-WR720N v3/g' \
-target/linux/ath79/dts/ar9331_tplink_tl-wr710n.dtsi
+#sed -i 's/TL-WR710N/TL-WR720N v3/g' target/linux/ath79/dts/ar9331_tplink_tl-wr710n.dtsi
 
-#sed -i 's/tplink,tl-wr710n/tplink,tl-wr720n-v3/g' \
-target/linux/ath79/dts/ar9331_tplink_tl-wr710n.dtsi
+#sed -i 's/tplink,tl-wr710n/tplink,tl-wr720n-v3/g' target/linux/ath79/dts/ar9331_tplink_tl-wr710n.dtsi
 
 echo "Patch done."
